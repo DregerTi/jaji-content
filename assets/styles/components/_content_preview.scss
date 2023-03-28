@@ -6,6 +6,7 @@
     border-radius:rem(15);
     position: relative;
     overflow: hidden;
+    margin-bottom: 40px;
 
     > figure {
       position: absolute;
@@ -59,8 +60,23 @@
           width: 100px;
           height: 100px;
           font-size: rem(24);
-          background-color: $color-ocean-wave!important;
           border-radius: 100px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &.big-btn--video{
+            background-color: $color-ocean-wave!important;
+          }
+
+          &.big-btn--podcast{
+            background-color: $color-red-light!important;
+          }
+
+          &.big-btn--article{
+            background-color: $color-yellow-sub!important;
+          }
+
 
           > .material-symbols-outlined{
             font-size: rem(56) !important;
@@ -73,6 +89,7 @@
 
 @media (max-width: 768px) {
   .content-preview {
+    margin-bottom: 0px;
     > article {
       width: 100%;
       height: 100vh;

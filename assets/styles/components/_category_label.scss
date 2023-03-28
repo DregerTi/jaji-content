@@ -1,0 +1,41 @@
+.category-label {
+
+  box-sizing: border-box;
+  padding: 3px 8px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 3px 8px;
+  background: #E67377;
+  border: 1px solid #D45458;
+  border-radius: 4px;
+
+  :hover {
+
+  }
+
+  &--yellow{
+    background: #EBA800;
+    border: 1px solid #CC9200;
+  }
+
+  &--blue{
+    background: #355070;
+    border: 1px solid #3E597A;
+  }
+
+  &--red{
+    background: #E67377;
+    border: 1px solid #D45458;
+  }
+
+  &.active {
+      border: 2px solid $color-black;
+  }
+}
+
+
+
+
+

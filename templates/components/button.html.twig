@@ -1,0 +1,14 @@
+{% if path is defined %}
+    <a href="{{ path(path, pathParams is defined ? pathParams : {} ) }}">
+{% endif %}
+        <div class="button {{ fill ? 'button-filled' : '' }} {{ icon is defined ? 'button-icon' : '' }} {{ variant  is defined ? 'button-'~variant : '' }}">
+            {% if icon is defined %}
+                {{ include('/icons/icon-' ~ icon ~ '.html.svg') }}
+            {% endif %}
+            {% if text is defined %}
+                <p>{{ text }}</p>
+            {% endif %}
+        </div>
+{% if path is defined %}
+    </a>
+{% endif %}

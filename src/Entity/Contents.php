@@ -7,7 +7,9 @@ use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ContentsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Choice;
 
 #[ORM\Entity(repositoryClass: ContentsRepository::class)]
 class Contents
@@ -20,19 +22,17 @@ class Contents
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $prewiew_img = null;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
     #[ORM\Column(length: 50)]
+    #[Choice(choices: ['Youtube', 'Spotify', 'Deezer', 'Article'])]
     private ?string $type = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $content = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 350, nullable: true)]
     private ?string $src = null;
 
     #[ORM\ManyToMany(targetEntity: Offers::class, inversedBy: 'contents')]
@@ -43,6 +43,9 @@ class Contents
 
     #[ORM\ManyToMany(targetEntity: Categories::class, inversedBy: 'contents')]
     private Collection $categories;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $content = null;
 
     public function __construct()
     {
@@ -88,18 +91,6 @@ class Contents
     public function setType(?string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(?string $content): self
-    {
-        $this->content = $content;
 
         return $this;
     }
@@ -190,6 +181,18 @@ class Contents
     public function removeCategory(Categories $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
 
         return $this;
     }

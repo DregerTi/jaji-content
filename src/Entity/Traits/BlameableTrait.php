@@ -14,6 +14,7 @@ trait BlameableTrait
 
     #[ORM\ManyToOne(targetEntity: Users::class)]
     #[Blameable(on: 'update')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Users $updatedBy = null;
 
     /**

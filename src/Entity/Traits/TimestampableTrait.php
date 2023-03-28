@@ -11,7 +11,7 @@ trait TimestampableTrait
     #[Timestampable(on: 'create')]
     private ?\DateTime $createdAt = null;
 
-    #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
+    #[ORM\Column(nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
     #[Timestampable(on: 'update')]
     private ?\DateTime $updatedAt = null;
 

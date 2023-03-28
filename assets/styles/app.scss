@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Import styles
+@import 'fonts';
+@import 'colors';
+@import 'base';
+
+// Import components
+@import 'components/content_preview';
+
+html {
+  @apply bg-white;
+  @apply font-sans;
+}
+

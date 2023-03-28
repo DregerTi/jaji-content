@@ -1,0 +1,47 @@
+
+{% extends 'base.html.twig' %}
+{% if is_granted('ROLE_ADMIN') %}
+    {% set btnPath = 'back_user_edit' %}
+{% else %}
+    {% set btnPath = 'front_user_edit' %}
+{% endif %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+    {% embed '/components/back_office_header_and_menu.html.twig' with {'active': 'account'} %}
+        {% block content %}
+            <div class="flex-grow">
+
+                {{ include('/components/sub_header.html.twig', {
+                    title:'Mon compte',
+                    text:'Vous pouvez consulter ici vos informations personnelles',
+                    btnText:'Editer',
+                    btnPath: btnPath,
+                    btnPathParams: {'id': user.id},
+                }) }}
+
+                <table class="table">
+                    <tbody>
+                    <tr class="flex flex-col gap-2 items-start mb-8">
+                        <th>Email</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr class="flex flex-col gap-2 items-start mb-8">
+                        <th>Status</th>
+                        <td><div class="status-box">{{ user.getStatusLabel }}</div></td>
+                    </tr>
+                    <tr class="flex flex-col gap-2 items-start mb-8">
+                        <th>Crée le</th>
+                        <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr class="flex flex-col gap-2 items-start mb-8">
+                        <th>Mis à jour le</th>
+                        <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

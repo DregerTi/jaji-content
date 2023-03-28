@@ -25,7 +25,7 @@ class Contents
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $prewiew_img = null;
 
     #[ORM\Column(length: 255)]
@@ -33,7 +33,7 @@ class Contents
     private ?string $title = null;
 
     #[ORM\Column(length: 50)]
-    #[Choice(choices: ['YouTube', 'Spotify', 'Deezer', 'Article'])]
+    #[Choice(choices: ['Vidéo', 'Podcast', 'Article'])]
     private ?string $type = null;
 
     #[ORM\Column(length: 350, nullable: true)]

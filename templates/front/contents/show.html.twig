@@ -1,4 +1,4 @@
-{% extends '../../base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Contents{% endblock %}
 
@@ -13,7 +13,11 @@
             </tr>
             <tr>
                 <th>Prewiew_img</th>
-                <td>{{ content.prewiewImg }}</td>
+                {% if content.prewiewImg %}
+                    <td><img src="{{ asset(content.prewiewImg) }}" alt="prewiewImg" width="100" height="100"></td>
+                {% else %}
+                    <td>no image</td>
+                {% endif %}
             </tr>
             <tr>
                 <th>Title</th>

@@ -26,7 +26,6 @@ class ContentsController extends AbstractController
             $photoFile = $form->get('image')->getData();
             if ($photoFile) {
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = '/images/'.$safeFilename . '-' . uniqid('', true) . '.' . $photoFile->guessExtension();
                 try {
@@ -35,7 +34,8 @@ class ContentsController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    //TODO voir si les flash sont gérés
+                    $this->addFlash('error', 'Erreur lors de la sauvegarde de l\'image : \n' . $e->getMessage());
                 }
                 $content->setPrewiewImg($newFilename);
             }

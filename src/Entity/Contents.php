@@ -26,10 +26,6 @@ class Contents
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Expression(
-        expression: "this.getType() == 'Article' ? this.getPrewiewImg() != null : true",
-        message: "Vous devez ajouter une image de prévisualisation pour les articles"
-    )]
     private ?string $prewiew_img = null;
 
     #[ORM\Column(length: 255)]

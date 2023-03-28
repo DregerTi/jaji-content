@@ -71,6 +71,7 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
         return [
             UsersFixtures::class,
             OffersFixtures::class,
+            CategoriesFixtures::class,
         ];
     }
 }

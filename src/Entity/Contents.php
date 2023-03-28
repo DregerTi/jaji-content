@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\Expression;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -25,16 +26,25 @@ class Contents
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Expression(
+        expression: "this.getType() == 'Article' ? this.getPrewiewImg() != null : true",
+        message: "Vous devez ajouter une image de prévisualisation pour les articles"
+    )]
     private ?string $prewiew_img = null;
 
     #[ORM\Column(length: 255)]
+    #[NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(length: 50)]
-    #[Choice(choices: ['Youtube', 'Spotify', 'Deezer', 'Article'])]
+    #[Choice(choices: ['YouTube', 'Spotify', 'Deezer', 'Article'])]
     private ?string $type = null;
 
     #[ORM\Column(length: 350, nullable: true)]
+    #[Expression(
+        expression: "this.getType() == 'Article' ? this.getSrc() == null : this.getSrc() != null",
+        message: "Vous ne pouvez pas ajouter de lien pour les articles"
+    )]
     private ?string $src = null;
 
     #[ORM\ManyToMany(targetEntity: Offers::class, inversedBy: 'contents')]

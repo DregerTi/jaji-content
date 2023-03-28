@@ -39,6 +39,9 @@ class ContentsType extends AbstractType
             ->add('title', null, [
                 'label' => 'Titre',
             ])
+            ->add('description', null, [
+                'label' => 'Description',
+            ])
             ->add('type', ChoiceType::class, [
                 'label' => 'Type',
                 'choices' => [

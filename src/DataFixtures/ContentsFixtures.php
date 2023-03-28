@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Categories;
 use App\Entity\Contents;
+use App\Entity\Offers;
 use App\Entity\Users;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -16,6 +17,7 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
     {
         $types = ['Youtube', 'Spotify', 'Article'];
         $faker = Factory::create('fr_FR');
+        $offers = $manager->getRepository(Offers::class)->findAll();
         $users = array_merge($manager->getRepository(Users::class)->findByRole('EDITEUR'), $manager->getRepository(Users::class)->findByRole('ADMIN'));
         $categories = $manager->getRepository(Categories::class)->findAll();
 
@@ -47,6 +49,10 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
             foreach ($objectCategory as $category) {
                 $object->addCategory($category);
             }
+            $objectOffers = $faker->randomElements($offers, $faker->numberBetween(1, count($offers)));
+            foreach ($objectOffers as $offer) {
+                $object->addOffer($offer);
+            }
 
             $object->setCreatedAt($faker->dateTimeBetween('-1 years', 'now'));
             $object->setCreatedBy($faker->randomElement($users));
@@ -64,6 +70,7 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UsersFixtures::class,
+            OffersFixtures::class,
         ];
     }
 }

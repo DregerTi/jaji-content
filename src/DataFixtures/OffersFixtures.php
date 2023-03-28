@@ -12,25 +12,27 @@ class OffersFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
-        $offers = $manager->getRepository(Offers::class)->findAll();
 
         $object = (new Offers())
-            ->setTitle('dentaire')
+            ->setTitle('Dentaire')
             ->setLink($faker->words($faker->numberBetween(1, 5), true))
+            ->setCreatedAt($faker->dateTimeBetween('-1 years', 'now'))
         ;
 
         $manager->persist($object);
 
         $object = (new Offers())
-            ->setTitle('optique')
+            ->setTitle('Optique')
             ->setLink($faker->words($faker->numberBetween(1, 5), true))
+            ->setCreatedAt($faker->dateTimeBetween('-1 years', 'now'))
         ;
 
         $manager->persist($object);
 
         $object = (new Offers())
-            ->setTitle('général')
+            ->setTitle('Général')
             ->setLink($faker->words($faker->numberBetween(1, 5), true))
+            ->setCreatedAt($faker->dateTimeBetween('-1 years','now'))
         ;
 
         $manager->persist($object);

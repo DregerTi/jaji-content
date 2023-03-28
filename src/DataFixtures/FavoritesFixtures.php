@@ -2,40 +2,40 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Contents;
+use App\Entity\Favorites;
 use App\Entity\Offers;
+use App\Entity\Users;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-class OffersFixtures extends Fixture
+class FavoritesFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
-        $offers = $manager->getRepository(Offers::class)->findAll();
+        $clients = $manager->getRepository(Users::class)->findByRole('CLIENT');
+        $contents = $manager->getRepository(Contents::class)->findAll();
 
-        $object = (new Offers())
-            ->setTitle('dentaire')
-            ->setLink($faker->words($faker->numberBetween(1, 5), true))
-        ;
+        for ($i=0; $i<1000; $i++) {
+            $object = (new Favorites())
+            ->setLiker($faker->randomElement($clients))
+                ->setContent($faker->randomElement($contents))
+            ;
 
-        $manager->persist($object);
-
-        $object = (new Offers())
-            ->setTitle('optique')
-            ->setLink($faker->words($faker->numberBetween(1, 5), true))
-        ;
-
-        $manager->persist($object);
-
-        $object = (new Offers())
-            ->setTitle('général')
-            ->setLink($faker->words($faker->numberBetween(1, 5), true))
-        ;
-
-        $manager->persist($object);
+            $manager->persist($object);
+        }
 
 
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            ContentsFixtures::class,
+        ];
     }
 }

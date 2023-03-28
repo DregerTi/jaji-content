@@ -16,7 +16,9 @@ class ContentsController extends AbstractController
     public function index(ContentsRepository $contentsRepository, Request $request): Response
     {
         $page = $request->query->get('page') ?? 1;
-        $categories = explode(',', $request->query->get('categories'));
+        $categories = $request->query->get('categories')
+            ? explode(',', $request->query->get('categories'))
+            : null;
 
         return $this->render('front/contents/index.html.twig', [
             'contents' => $contentsRepository->search($categories, $page),

@@ -24,26 +24,28 @@ class ContentsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('image')->getData();
-            $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = '/images/'.$safeFilename . '-' . uniqid('', true) . '.' . $photoFile->guessExtension();
-            try {
-                $photoFile->move(
-                    'images/',
-                    $newFilename
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = '/images/'.$safeFilename . '-' . uniqid('', true) . '.' . $photoFile->guessExtension();
+                try {
+                    $photoFile->move(
+                        'images/',
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $content->setPrewiewImg($newFilename);
             }
-            $content->setPrewiewImg($newFilename);
 
             $content->setCreatedBy($this->getUser());
             $content->setCreatedAt(new \DateTime());
 
             $contentsRepository->save($content, true);
 
-            return $this->redirectToRoute('back_contents_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_contents_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/contents/new.html.twig', [

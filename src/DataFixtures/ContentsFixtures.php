@@ -23,6 +23,7 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
             $object = (new Contents())
                 ->setType($faker->randomElements($types, $faker->numberBetween(1, 1))[0])
                 ->setTitle($faker->words($faker->numberBetween(1, 5), true))
+                ->setDescription($faker->text(100))
             ;
 
             switch ($object->getType()) {

@@ -3,7 +3,6 @@
 {% block title %}Contents index{% endblock %}
 
 {% block body %}
-    <h1>Contents index</h1>
 
     <table class="table">
         <thead>
@@ -34,7 +33,7 @@
                 <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('back_contents_show', {'id': content.id}) }}">show</a>
+                    <a href="{{ path('front_contents_show', {'id': content.id}) }}">show</a>
                     <a href="{{ path('back_contents_edit', {'id': content.id}) }}">edit</a>
                 </td>
             </tr>

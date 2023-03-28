@@ -23,7 +23,7 @@ class ContentsType extends AbstractType
 
                 'mapped' => false,
 
-                'required' => false,
+                'required' => true,
 
                 'constraints' => [
                     new File([

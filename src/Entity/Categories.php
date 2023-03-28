@@ -6,8 +6,10 @@ use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
+#[UniqueEntity('label', message: 'Cette catégorie existe déjà.')]
 class Categories
 {
     #[ORM\Id]
@@ -15,7 +17,7 @@ class Categories
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50, unique: true)]
+    #[ORM\Column(length: 50)]
     private ?string $label = null;
 
     #[ORM\ManyToMany(targetEntity: Users::class, mappedBy: 'categories')]

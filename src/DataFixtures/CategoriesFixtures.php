@@ -15,11 +15,16 @@ class CategoriesFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
         $users = $manager->getRepository(Users::class)->findByRole('CLIENT');
-        // pwd = test
-        for ($i=0; $i < 100; $i++) {
+        $usedWords = [];
+        for ($i=0; $i < 50; $i++) {
+            $word = $faker->word;
+            while (in_array($word, $usedWords, true)) {
+                $word = $faker->word;
+            }
             $object = (new Categories())
                 ->setLabel($faker->word)
             ;
+            $usedWords[] = $word;
             $users = $faker->randomElements($users, $faker->numberBetween(1, count($users)));
             foreach ($users as $user) {
                 $object->addUser($user);

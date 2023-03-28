@@ -25,7 +25,7 @@ class Contents
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $prewiew_img = null;
 
     #[ORM\Column(length: 255)]

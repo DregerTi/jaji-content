@@ -41,9 +41,13 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Categories::class, inversedBy: 'users')]
     private Collection $categories;
 
+    #[ORM\OneToMany(mappedBy: 'liker', targetEntity: Favorites::class)]
+    private Collection $favorites;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +164,36 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCategory(Categories $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Favorites>
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Favorites $favorite): self
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites->add($favorite);
+            $favorite->setLiker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Favorites $favorite): self
+    {
+        if ($this->favorites->removeElement($favorite)) {
+            // set the owning side to null (unless already changed)
+            if ($favorite->getLiker() === $this) {
+                $favorite->setLiker(null);
+            }
+        }
 
         return $this;
     }

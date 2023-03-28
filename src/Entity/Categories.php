@@ -21,9 +21,13 @@ class Categories
     #[ORM\ManyToMany(targetEntity: Users::class, mappedBy: 'categories')]
     private Collection $users;
 
+    #[ORM\ManyToMany(targetEntity: Contents::class, mappedBy: 'categories')]
+    private Collection $contents;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->contents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,6 +69,33 @@ class Categories
     {
         if ($this->users->removeElement($user)) {
             $user->removeCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contents>
+     */
+    public function getContents(): Collection
+    {
+        return $this->contents;
+    }
+
+    public function addContent(Contents $content): self
+    {
+        if (!$this->contents->contains($content)) {
+            $this->contents->add($content);
+            $content->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContent(Contents $content): self
+    {
+        if ($this->contents->removeElement($content)) {
+            $content->removeCategory($this);
         }
 
         return $this;

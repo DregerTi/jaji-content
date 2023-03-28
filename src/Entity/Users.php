@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
@@ -30,12 +31,16 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Regex(pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$/", message: "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial")]
     private ?string $password = null;
 
     #[ORM\Column(length: 80)]
+    #[Range(notInRangeMessage: "Le prénom doit faire entre {{ min }} et {{ max }} caractères", min: 2, max: 80)]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 80)]
+    #[Range(notInRangeMessage: "Le nom doit faire entre {{ min }} et {{ max }} caractères", min: 2, max: 80)]
+
     private ?string $lastname = null;
 
     #[ORM\ManyToMany(targetEntity: Categories::class, inversedBy: 'users')]

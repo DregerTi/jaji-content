@@ -36,6 +36,7 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
                     break;
                 case 'Article':
                     $object->setContent($faker->text(1000));
+                    $object->setPrewiewImg($faker->imageUrl(640, 480, 'cats', true, 'Faker', true));
                     break;
                     default:
                     break;

@@ -5,11 +5,20 @@
         </figure>
         <section>
             <div>
-                <button>
-                    <i class="fa fa-heart"></i>
+                <button class="big-btn--{{ type }}">
+                    {% if type is "video" %}
+                        <span class="material-symbols-outlined">play_arrow</span>
+                    {% endif %}
+                    {% if type is "podcast" %}
+                        <span class="material-symbols-outlined">music_note</span>
+                    {% endif %}
+                    {% if type is "article" %}
+                        <span class="material-symbols-outlined">subject</span>
+                    {% endif %}
                 </button>
             </div>
-            <label>Lorem Ipsame alam</label>
+            <label>{{ title }}</label>
+            <date>{{ date }}</date>
         </section>
     </article>
 </a>

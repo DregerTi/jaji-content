@@ -15,7 +15,7 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $types = ['Vidéo', 'Podcast', 'Article'];
+        $types = ['Video', 'Podcast', 'Article'];
         $faker = Factory::create('fr_FR');
         $offers = $manager->getRepository(Offers::class)->findAll();
         $users = array_merge($manager->getRepository(Users::class)->findByRole('EDITEUR'), $manager->getRepository(Users::class)->findByRole('ADMIN'));
@@ -29,7 +29,7 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
             ;
 
             switch ($object->getType()) {
-                case 'Vidéo':
+                case 'Video':
                     $object->setSrc('<iframe width="560" height="315" src="https://www.youtube.com/embed/n4DB-oay4XQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>')
                         ->setContent($faker->text(100));
                 case 'Podcast':

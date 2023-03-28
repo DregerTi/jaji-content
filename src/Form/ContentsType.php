@@ -46,7 +46,7 @@ class ContentsType extends AbstractType
                 'label' => 'Type',
                 'choices' => [
                     'Article' => 'Article',
-                    'Vidéo' => 'Vidéo',
+                    'Video' => 'Vidéo',
                     'Podcast' => 'Podcast',
                 ]
             ])

@@ -15,14 +15,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/contents')]
 class ContentsController extends AbstractController
 {
-    #[Route('/', name: 'contents_index', methods: ['GET'])]
-    public function index(ContentsRepository $contentsRepository): Response
-    {
-        return $this->render('back/contents/index.html.twig', [
-            'contents' => $contentsRepository->findBy([], ['createdAt' => 'DESC']),
-        ]);
-    }
-
     #[Route('/new', name: 'contents_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ContentsRepository $contentsRepository, SluggerInterface $slugger): Response
     {
@@ -59,15 +51,6 @@ class ContentsController extends AbstractController
             'form' => $form,
         ]);
     }
-
-    #[Route('/{id}', name: 'contents_show', methods: ['GET'])]
-    public function show(Contents $content): Response
-    {
-        return $this->render('back/contents/show.html.twig', [
-            'content' => $content,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'contents_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Contents $content, ContentsRepository $contentsRepository): Response
     {

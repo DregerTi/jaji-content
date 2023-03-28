@@ -39,6 +39,23 @@ class ContentsRepository extends ServiceEntityRepository
         }
     }
 
+    public function search(?array $categories, int $page): array
+    {
+        $query = $this->createQueryBuilder('c');
+
+        if ($categories) {
+            $query->innerJoin('c.categories', 'cat')
+                ->andWhere('cat.id IN (:categories)')
+                ->setParameter('categories', $categories);
+        }
+
+        $query->orderBy('c.createdAt', 'DESC')
+            ->setFirstResult(($page - 1) * 10)
+            ->setMaxResults(10);
+
+        return $query->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Contents[] Returns an array of Contents objects
 //     */

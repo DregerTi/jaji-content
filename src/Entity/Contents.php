@@ -33,7 +33,7 @@ class Contents
     private ?string $title = null;
 
     #[ORM\Column(length: 50)]
-    #[Choice(choices: ['YouTube', 'Spotify', 'Deezer', 'Article'])]
+    #[Choice(choices: ['Vidéo', 'Podcast', 'Article'])]
     private ?string $type = null;
 
     #[ORM\Column(length: 350, nullable: true)]

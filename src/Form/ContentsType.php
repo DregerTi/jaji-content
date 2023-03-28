@@ -46,9 +46,8 @@ class ContentsType extends AbstractType
                 'label' => 'Type',
                 'choices' => [
                     'Article' => 'Article',
-                    'YouTube' => 'YouTube',
-                    'Spotify' => 'Spotify',
-                    'Deezer' => 'Deezer',
+                    'Vidéo' => 'Vidéo',
+                    'Podcast' => 'Podcast',
                 ]
             ])
             ->add('src', null, [

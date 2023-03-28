@@ -15,13 +15,13 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $types = ['Youtube', 'Spotify', 'Article'];
+        $types = ['Vidéo', 'Podcast', 'Article'];
         $faker = Factory::create('fr_FR');
         $offers = $manager->getRepository(Offers::class)->findAll();
         $users = array_merge($manager->getRepository(Users::class)->findByRole('EDITEUR'), $manager->getRepository(Users::class)->findByRole('ADMIN'));
         $categories = $manager->getRepository(Categories::class)->findAll();
 
-        for ($i=0; $i < 100; $i++) {
+        for ($i=0; $i < 1000; $i++) {
             $object = (new Contents())
                 ->setType($faker->randomElements($types, $faker->numberBetween(1, 1))[0])
                 ->setTitle($faker->words($faker->numberBetween(1, 5), true))
@@ -29,11 +29,11 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
             ;
 
             switch ($object->getType()) {
-                case 'Youtube':
+                case 'Vidéo':
                     $object->setSrc('<iframe width="560" height="315" src="https://www.youtube.com/embed/n4DB-oay4XQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>')
                         ->setContent($faker->text(100));
                     break;
-                case 'Spotify':
+                case 'Podcast':
                     $object->setSrc('<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3LbYXe4nxvgTYofXbceuXs?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>')
                         ->setContent($faker->text(100));
                     break;

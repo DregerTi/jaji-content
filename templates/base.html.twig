@@ -11,14 +11,41 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
-
-
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header class="header">
+            <div class="header-content container mx-auto">
+                <form method="GET" action="#" class="flex left-container items-center">
+                    <a href="{{ path('front_default_index') }}">
+                        <img class="logo" src="{{ asset('build/images/logo.png') }}" alt="logo">
+                    </a>
+                    <input name="search" type="text" class="search-bar w-full" value="{{ app.request.query.get('search') }}" placeholder="Que cherchez-vous ?">
+                </form>
+
+                <nav class="header-navigation space-x-5 max-lg:hidden">
+                    <a class="hover:text-primary" href="{{ path('app_logout') }}">Se déconnecter</a>
+                </nav>
+            </div>
+        </header>
+
+        <div class="container mx-auto">
+            {% block body %}{% endblock %}
+        </div>
+
+        {% if notyf is defined %}
+            <div id="notyf-message" class={{ notyf }}>{{ notyf }}</div>
+        {% endif %}
+
+        {%  include '/components/notyf.html.twig' %}
+    </body>
+    <footer>
+    
+    </footer>
     </body>
     <script>
         feather.replace()

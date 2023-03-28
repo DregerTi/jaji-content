@@ -1,0 +1,50 @@
+{% extends '../../base.html.twig' %}
+
+{% block title %}Contents{% endblock %}
+
+{% block body %}
+    <h1>Contents</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ content.id }}</td>
+            </tr>
+            <tr>
+                <th>Prewiew_img</th>
+                <td>{{ content.prewiewImg }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ content.title }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ content.type }}</td>
+            </tr>
+            <tr>
+                <th>Src</th>
+                <td>{{ content.src }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ content.content }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_contents_index') }}">back to list</a>
+
+    <a href="{{ path('app_contents_edit', {'id': content.id}) }}">edit</a>
+
+    {{ include('contents/_delete_form.html.twig') }}
+{% endblock %}

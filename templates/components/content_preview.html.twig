@@ -1,4 +1,4 @@
-<a class="content-preview content-preview----{{ type }}" href="{{ path(path, pathParams) }}">
+<a class="content-preview content-preview----{{ type }}  {{ middle ? 'content-preview--down' : '' }}" href="{{ path(path, pathParams) }}">
     <article >
         <figure>
             <img src="{{ asset(image) }}" alt="content preview picture">
@@ -17,7 +17,7 @@
                     {% endif %}
                 </button>
             </div>
-            <section class="flex gap-2">
+            <section class="flex gap-2 flex-wrap">
                 {% for categorie in categories %}
                     {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: type == "video" ? "blue" : type == "podcast" ? "red" : type == "article" ? "yellow" : null }) }}
                 {% endfor %}

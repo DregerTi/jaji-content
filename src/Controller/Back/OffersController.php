@@ -8,13 +8,15 @@ use App\Repository\OffersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/offers')]
 class OffersController extends AbstractController
 {
     #[Route('/new', name: 'offers_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, OffersRepository $offersRepository): Response
+    public function new(Request $request, OffersRepository $offersRepository, HubInterface $hub): Response
     {
         $offer = new Offers();
         $form = $this->createForm(OffersType::class, $offer);
@@ -23,6 +25,14 @@ class OffersController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $offer->setCreatedAt(new \DateTime());
             $offersRepository->save($offer, true);
+
+            $offerMsg = "Une nouvelle offre qui pourrait vous intéresser est disponible '".$offer->getTitle()."' : ".$offer->getLink();
+            $update = new Update(
+                'http://localhost/books/1',
+                json_encode(['offer' => $offerMsg])
+            );
+
+            $hub->publish($update);
 
             return $this->redirectToRoute('front_offers_index', [], Response::HTTP_SEE_OTHER);
         }

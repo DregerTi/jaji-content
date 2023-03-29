@@ -33,7 +33,7 @@
             </div>
         </header>
 
-        <div class="container mx-auto">
+        <div class="container mx-auto" style="margin-top: 100px">
             {% block body %}{% endblock %}
         </div>
 
@@ -49,5 +49,52 @@
     </body>
     <script>
         feather.replace()
+        function notifyOffers(data) {
+            console.log(data.offer);
+            if (!("Notification" in window)) {
+                // Check if the browser supports notifications
+                alert("This browser does not support desktop notification");
+            } else if (Notification.permission === "granted") {
+                // Check whether notification permissions have already been granted;
+                // if so, create a notification
+                const options = {
+                    vibrate: [200, 100, 200]
+                }
+
+                const notification = new Notification("Nouvelle offre !", {
+                    body: data.offer,
+                    tag: "simple-push-demo-notification",
+                });
+                notification.vibrate;
+
+                // …
+            } else if (Notification.permission !== "denied") {
+                // We need to ask the user for permission
+                Notification.requestPermission().then((permission) => {
+                    // If the user accepts, let's create a notification
+                    if (permission === "granted") {
+                        const options = {
+                            vibrate: [200, 100, 200]
+                        }
+
+                        const notification = new Notification("Nouvelle offre !", {
+                            body: data.offer,
+                            tag: "simple-push-demo-notification",
+                        });
+                        notification.vibrate;
+                        // …
+                    }
+                });
+            }
+        }
+
+        const eventSource = new EventSource("{{ mercure('http://localhost/books/1')|escape('js') }}");
+        eventSource.onmessage = event => {
+            // Will be called every time an update is published by the server
+
+            notifyOffers(JSON.parse(event.data));
+        }
+
+
     </script>
 </html>

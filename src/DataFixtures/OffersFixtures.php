@@ -14,22 +14,25 @@ class OffersFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         $object = (new Offers())
-            ->setTitle('dentaire')
-            ->setLink($faker->words($faker->numberBetween(1, 5), true))
+            ->setTitle('Essentielle')
+            ->setLink('https://jaji.fr/offres/')
+            ->setCreatedAt($faker->dateTimeBetween('-1 years', 'now'))
         ;
 
         $manager->persist($object);
 
         $object = (new Offers())
-            ->setTitle('optique')
-            ->setLink($faker->words($faker->numberBetween(1, 5), true))
+            ->setTitle('Équilibrée')
+            ->setLink('https://jaji.fr/offres/')
+            ->setCreatedAt($faker->dateTimeBetween('-1 years', 'now'))
         ;
 
         $manager->persist($object);
 
         $object = (new Offers())
-            ->setTitle('général')
-            ->setLink($faker->words($faker->numberBetween(1, 5), true))
+            ->setTitle('Augmentée')
+            ->setLink('https://jaji.fr/offres/')
+            ->setCreatedAt($faker->dateTimeBetween('-1 years','now'))
         ;
 
         $manager->persist($object);

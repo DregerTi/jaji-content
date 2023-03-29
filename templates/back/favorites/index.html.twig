@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Favorites index{% endblock %}
+
+{% block body %}
+        {% for favorite in favorites %}
+            {{ include('/components/content_preview.html.twig', {type: content.type|lower, path:'front_contents_show', pathParams:{id: favorite.content.id}, title:favorite.content.title, date:favorite.content.updatedAt ? favorite.content.updatedAt|date('Y-m-d H:i:s') : favorite.content.createdAt|date('Y-m-d H:i:s'), image:asset(favorite.content.prewiewImg ), categories:favorite.content.getCategories }) }}
+        {% endfor %}
+
+
+{% endblock %}

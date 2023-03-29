@@ -5,15 +5,19 @@ namespace App\Entity;
 use App\Entity\Traits\BlameableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ContentsRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\Expression;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 
 #[ORM\Entity(repositoryClass: ContentsRepository::class)]
+#[UniqueEntity('slug', message: 'Ce slug existe déjà. Changez le titre.')]
 class Contents
 {
     use TimestampableTrait;
@@ -24,17 +28,28 @@ class Contents
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $prewiew_img = null;
 
     #[ORM\Column(length: 255)]
+    #[NotBlank]
+    #[Length(
+        min: 3,
+        max: 255,
+        minMessage: "Le titre doit faire au moins 3 caractères",
+        maxMessage: "Le titre ne peut pas faire plus de 255 caractères"
+    )]
     private ?string $title = null;
 
     #[ORM\Column(length: 50)]
-    #[Choice(choices: ['Youtube', 'Spotify', 'Deezer', 'Article'])]
+    #[Choice(choices: ['Video', 'Podcast', 'Article'])]
     private ?string $type = null;
 
     #[ORM\Column(length: 350, nullable: true)]
+    #[Expression(
+        expression: "this.getType() == 'Article' ? this.getSrc() == null : this.getSrc() != null",
+        message: "Vous ne pouvez pas ajouter de lien pour les articles"
+    )]
     private ?string $src = null;
 
     #[ORM\ManyToMany(targetEntity: Offers::class, inversedBy: 'contents')]
@@ -52,6 +67,9 @@ class Contents
     #[ORM\Column(length: 255)]
     #[NotBlank(message: "La description ne peut pas être vide")]
     private ?string $description = null;
+
+    #[ORM\Column(length: 350, unique: true)]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -85,6 +103,7 @@ class Contents
     public function setTitle(?string $title): self
     {
         $this->title = $title;
+        $this->setSlug();
 
         return $this;
     }
@@ -211,6 +230,18 @@ class Contents
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(): self
+    {
+        $this->slug = (new Slugify())->slugify($this->title);
 
         return $this;
     }

@@ -23,7 +23,7 @@ class ContentsType extends AbstractType
 
                 'mapped' => false,
 
-                'required' => false,
+                'required' => true,
 
                 'constraints' => [
                     new File([
@@ -39,13 +39,15 @@ class ContentsType extends AbstractType
             ->add('title', null, [
                 'label' => 'Titre',
             ])
+            ->add('description', null, [
+                'label' => 'Description',
+            ])
             ->add('type', ChoiceType::class, [
                 'label' => 'Type',
                 'choices' => [
                     'Article' => 'Article',
-                    'YouTube' => 'YouTube',
-                    'Spotify' => 'Spotify',
-                    'Deezer' => 'Deezer',
+                    'Video' => 'Vidéo',
+                    'Podcast' => 'Podcast',
                 ]
             ])
             ->add('src', null, [

@@ -1,0 +1,85 @@
+.button {
+  display: flex;
+  align-items: center;
+  padding: rem(6) rem(15);
+  border: 3px solid $color-grey;
+  color: $color-grey;
+  border-radius: 1em;
+  gap: rem(10);
+  width: fit-content;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 700;
+  font-size: rem(16);
+
+  &:hover {
+    background-color: $color-grey;
+    color: $color-white;
+  }
+
+  &-icon {
+    & p {
+      font-size: rem(14);
+      font-weight: 500;
+    }
+    & svg{
+      min-width: 1.1em;
+      min-height: 1.1em;
+      width: 1.1em;
+      height: 1.1em;
+    }
+  }
+
+  &-filled {
+    border-radius: 1em;
+    background-color: $color-primary!important;
+    color: $color-white;
+    border: none;
+
+    &:hover {
+      background-color: $color-secondary!important;
+      color: $color-white;
+    }
+  }
+
+  &-red {
+    border-radius: 1em;
+    background-color: $color-error!important;
+    color: $color-white;
+    border: none;
+
+    &:hover {
+      background-color: #81000e!important;
+      color: $color-white;
+    }
+  }
+
+  &-green {
+    border-radius: 1em;
+    background-color: $color-success!important;
+    color: $color-white;
+    border: none;
+
+    &:hover {
+      background-color: #20683b!important;
+      color: $color-white;
+    }
+  }
+
+}
+
+
+//normalize
+[type=button],
+[type=reset],
+[type=submit],
+button {
+  -webkit-appearance:unset;
+  background-color:unset;
+  background-image:unset;
+}
+
+
+
+
+

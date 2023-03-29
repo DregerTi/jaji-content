@@ -1,15 +1,29 @@
-<a class="content-preview" href="">
+<a class="content-preview content-preview----{{ type }}" href="{{ path(path, pathParams) }}">
     <article >
         <figure>
-            <img src="{{ asset('build/images/testBg.png') }}" alt="toilet picture">
+            <img src="{{ asset(image) }}" alt="content preview picture">
         </figure>
         <section>
             <div>
-                <button>
-                    <i class="fa fa-heart"></i>
+                <button class="big-btn--{{ type }}">
+                    {% if type == "video" %}
+                        <span class="material-symbols-outlined">play_arrow</span>
+                    {% endif %}
+                    {% if type == "podcast" %}
+                        <span class="material-symbols-outlined">music_note</span>
+                    {% endif %}
+                    {% if type == "article" %}
+                        <span class="material-symbols-outlined">subject</span>
+                    {% endif %}
                 </button>
             </div>
-            <label>Lorem Ipsame alam</label>
+            <section class="flex gap-2">
+                {% for categorie in categories %}
+                    {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: type == "video" ? "blue" : type == "podcast" ? "red" : type == "article" ? "yellow" : null }) }}
+                {% endfor %}
+            </section>
+            <label>{{ title }}</label>
+            <date>{{ date }}</date>
         </section>
     </article>
 </a>

@@ -6,8 +6,10 @@ use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
+#[UniqueEntity('label', message: 'Cette catégorie existe déjà.')]
 class Categories
 {
     #[ORM\Id]

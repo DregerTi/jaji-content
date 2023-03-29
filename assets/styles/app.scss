@@ -9,6 +9,10 @@
 
 // Import components
 @import 'components/content_preview';
+@import 'components/category_label';
+@import 'components/header';
+@import 'components/button';
+@import 'components/subHeader';
 
 html {
   @apply bg-white;

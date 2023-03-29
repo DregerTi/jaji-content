@@ -24,26 +24,28 @@ class ContentsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('image')->getData();
-            $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = '/images/'.$safeFilename . '-' . uniqid('', true) . '.' . $photoFile->guessExtension();
-            try {
-                $photoFile->move(
-                    'images/',
-                    $newFilename
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = '/images/'.$safeFilename . '-' . uniqid('', true) . '.' . $photoFile->guessExtension();
+                try {
+                    $photoFile->move(
+                        'images/',
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    //TODO voir si les flash sont gérés
+                    $this->addFlash('error', 'Erreur lors de la sauvegarde de l\'image : \n' . $e->getMessage());
+                }
+                $content->setPrewiewImg($newFilename);
             }
-            $content->setPrewiewImg($newFilename);
 
             $content->setCreatedBy($this->getUser());
             $content->setCreatedAt(new \DateTime());
 
             $contentsRepository->save($content, true);
 
-            return $this->redirectToRoute('back_contents_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_contents_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/contents/new.html.twig', [
@@ -51,7 +53,7 @@ class ContentsController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/{id}/edit', name: 'contents_edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}/edit', name: 'contents_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Contents $content, ContentsRepository $contentsRepository): Response
     {
         $form = $this->createForm(ContentsType::class, $content);
@@ -69,7 +71,7 @@ class ContentsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'contents_delete', methods: ['POST'])]
+    #[Route('/{slug}', name: 'contents_delete', methods: ['POST'])]
     public function delete(Request $request, Contents $content, ContentsRepository $contentsRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$content->getId(), $request->request->get('_token'))) {

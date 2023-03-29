@@ -1,0 +1,62 @@
+<div class="pager pagination-nav flex mt-20 mb-20 flex-row justify-between">
+    <div class="flex flex-row justify-between gap-5 items-center">
+
+        {% set params = app.request.query.all() %}
+        {% set num_pages = (count / 25)|round(0, 'ceil') %}
+
+        {%  if app.request.get('page') > 1 %}
+            <button>
+                {% set p = app.request.get('page') is not defined or app.request.get('page') is null or app.request.get('page') == 1 ? 1 : app.request.get('page') - 1 %}
+                <a href="{{ path(app.request.get('_route'), params|merge({'page': p})) }}">
+                    <img src="{{ asset('/build/icons/icon-arrow-right.svg') }}">
+                </a>
+            </button>
+        {% endif %}
+        <div class="flex">
+            <a class="pl-3 pr-3 h-10 rounded-md font-medium text-lg text-grey bg-gray-300 flex items-center justify-center">
+                {% if app.request.get('page') is not defined or app.request.get('page') is null %}
+                    1
+                {% else %}
+                    {{ app.request.get('page') }}
+                {% endif %}
+            </a>
+
+            {% set p = app.request.get('page') is not defined or app.request.get('page') is null ? 2 : app.request.get('page') + 1 %}
+            {%  if p != num_pages and p < num_pages %}
+            <a class="pl-3 pr-3 h-10 rounded-md font-medium text-lg text-grey flex items-center justify-center" href="{{ path(app.request.get('_route'), params|merge({'page': p})) }}">
+                {% if app.request.get('page') is not defined or app.request.get('page') is null %}
+                    2
+                {% else %}
+                    {{ app.request.get('page') + 1 }}
+                {% endif %}
+            </a>
+            {% endif %}
+
+            {% set p = app.request.get('page') is not defined or app.request.get('page') is null ? 3 : app.request.get('page') + 2 %}
+            {%  if p != num_pages and p < num_pages %}
+                <a class="pl-3 pr-3 h-10 rounded-md font-medium text-lg text-grey flex items-center justify-center" href="{{ path(app.request.get('_route'), params|merge({'page': p})) }}">
+                    {% if app.request.get('page') is not defined or app.request.get('page') is null %}
+                        3
+                    {% else %}
+                        {{ app.request.get('page') + 2 }}
+                    {% endif %}
+                </a>
+            {% endif %}
+            {%  if app.request.get('page') != num_pages %}
+                <a class="pl-3 pr-3 h-10 rounded-md font-medium text-lg text-grey flex items-center justify-center" href="{{ path(app.request.get('_route'), params|merge({'page': num_pages })) }}">{{ num_pages }}</a>
+            {% endif %}
+        </div>
+        {%  if app.request.get('page') != num_pages %}
+            <button>
+                {% set p = app.request.get('page') is not defined or app.request.get('page') is null ? 2 : app.request.get('page') + 1 %}
+                <a class="pager__next" href="{{ path(app.request.get('_route'), params|merge({'page': p})) }}">
+                    <img src="{{ asset('/build/icons/icon-arrow-left.svg') }}">
+                </a>
+            </button>
+        {% endif %}
+    </div>
+    <labe class="text-sm text-grey font-medium">
+        <span class="text-black text-lg font-bold">{{ count }}</span>
+        Résultats
+    </labe>
+</div>

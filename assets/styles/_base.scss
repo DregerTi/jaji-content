@@ -29,8 +29,8 @@ body{
 
 @media (max-width: 768px) {
   .container-lite{
-    max-width: 100%;
-    padding: 0 10px;
+    width: calc(100% + 30px);
+    margin: 0 -15px;
   }
 }
 
@@ -115,4 +115,28 @@ button {
   }
 }
 
+
+.feed-container{
+  display: grid;
+  grid-template-columns: calc(33.333% - 3em) calc(33.333% - 3em) calc(33.333% - 3em);
+  grid-gap: 3em;
+
+
+  > .content-preview--down {
+    position: relative;
+    top: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .feed-container{
+    display: block;
+
+
+    > .content-preview--down {
+      position: relative;
+      top: unset;
+    }
+  }
+}
 

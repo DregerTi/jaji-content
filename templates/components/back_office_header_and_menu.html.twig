@@ -1,0 +1,34 @@
+<main class="container flex flex-col gap-24 max-md:gap-16">
+    <div class="flex gap-40">
+        <div class="flex flex-col gap-10 min-w-[200px] max-md:hidden ">
+            <div class="flex flex-col gap-5">
+                <label class="text-base font-medium text-black">Contenu</label>
+                <div class="flex flex-col gap-5">
+                    {{ include('/components/button_menu.html.twig', {
+                        path:'back_contents_index',
+                        icon:'book-open',
+                        iconSize:'22',
+                        name:'Contenus',
+                        active: active == 'contents' ? true : false
+                    }) }}
+                    {{ include('/components/button_menu.html.twig', {
+                        path:'back_categories_index',
+                        icon:'filter',
+                        iconSize:'22',
+                        name:'Catégories',
+                        active: active == 'categories' ? true : false
+                    }) }}
+                    {{ include('/components/button_menu.html.twig', {
+                        path:'back_offers_index',
+                        icon:'package',
+                        iconSize:'22',
+                        name:'Offres',
+                        active: active == 'offers' ? true : false
+                    }) }}
+                </div>
+            </div>
+        </div>
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>

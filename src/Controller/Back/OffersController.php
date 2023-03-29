@@ -13,6 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/offers')]
 class OffersController extends AbstractController
 {
+    #[Route('/', name: 'offers_index', methods: ['GET'])]
+    public function index(OffersRepository $offersRepository): Response
+    {
+        return $this->render('back/offers/index.html.twig', [
+            'offers' => $offersRepository->findAll(),
+        ]);
+    }
     #[Route('/new', name: 'offers_new', methods: ['GET', 'POST'])]
     public function new(Request $request, OffersRepository $offersRepository): Response
     {
@@ -30,6 +37,14 @@ class OffersController extends AbstractController
         return $this->renderForm('back/offers/new.html.twig', [
             'offer' => $offer,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'offers_show', methods: ['GET'])]
+    public function show(Offers $offer): Response
+    {
+        return $this->render('back/offers/show.html.twig', [
+            'offer' => $offer,
         ]);
     }
 

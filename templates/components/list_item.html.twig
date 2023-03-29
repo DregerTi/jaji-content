@@ -1,0 +1,32 @@
+<a class="flex flex-row gap-1 cursor-pointer mt-5 mb-5" href="{{ path(path, pathParams) }}">
+    <article class="flex gap-5">
+        {% if image is defined %}
+            <figure>
+                <img class="w-24 h-24 rounded-xl object-cover" src="{{ asset('build/images' ~ image ) }}">
+            </figure>
+        {% endif %}
+        <div class="flex flex-col gap-0.5">
+            <label class="text-black font-medium text-lg">{{ name }}</label>
+            <div class="text-grey text-base flex flex-col">
+                {% if createdAt is defined %}
+                    <p>Crée le
+                        <date>{{ createdAt }}</date>
+                        par
+                        {{ createdBy }}
+                    </p>
+                {% endif %}
+                {% if updatedAt is defined %}
+                    <p>Modifié le
+                        <date>{{ updatedAt }}</date>
+                        par
+                        {{ updatedBy }}
+                    </p>
+                {% endif %}
+                {% if status is defined %}
+                    <div class="status-box">{{ status }}</div>
+                {% endif %}
+            </div>
+
+        </div>
+    </article>
+</a>

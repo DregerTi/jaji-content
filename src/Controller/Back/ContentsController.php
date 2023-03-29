@@ -15,6 +15,24 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/contents')]
 class ContentsController extends AbstractController
 {
+    #[Route('/', name: 'contents_index', methods: ['GET'])]
+    public function index(Request $request, ContentsRepository $contentsRepository): Response
+    {
+        $page = $request->query->get('page') ?? 1;
+        $categories = $request->query->get('categories')
+            ? explode(',', $request->query->get('categories'))
+            : null;
+        $search = $request->query->get('search') ?? null;
+
+        $filteredContents = $contentsRepository->search($categories, $search, $page);
+
+        return $this->render('back/contents/index.html.twig', [
+            'contents' => $filteredContents['results'],
+            'totalNbOfContents' => $filteredContents['count'],
+            'userCategories' => null,
+        ]);
+    }
+
     #[Route('/new', name: 'contents_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ContentsRepository $contentsRepository, SluggerInterface $slugger): Response
     {
@@ -41,8 +59,17 @@ class ContentsController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/{slug}', name: 'contents_show', methods: ['GET'])]
+    public function show(Contents $content): Response
+    {
+        return $this->render('back/contents/show.html.twig', [
+            'content' => $content,
+        ]);
+    }
+
     #[Route('/{slug}/edit', name: 'contents_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Contents $content, ContentsRepository $contentsRepository): Response
+    public function edit(Request $request, Contents $content, ContentsRepository $contentsRepository, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ContentsType::class, $content, ['isNew' => false]);
         $form->handleRequest($request);
@@ -50,7 +77,7 @@ class ContentsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('image')->getData();
             if ($photoFile) {
-                $this->saveImage($photoFile, $slugger);
+                $content->setPrewiewImg($this->saveImage($photoFile, $slugger));
             }
 
             $content->setUpdatedBy($this->getUser());

@@ -7,6 +7,7 @@ use App\Repository\OffersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Regex;
 
 #[ORM\Entity(repositoryClass: OffersRepository::class)]
 class Offers
@@ -22,6 +23,7 @@ class Offers
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Regex(pattern: '/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/i', message: 'L\'url n\'est pas valide')]
     private ?string $link = null;
 
     #[ORM\ManyToMany(targetEntity: Contents::class, mappedBy: 'offers')]

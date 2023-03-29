@@ -33,6 +33,19 @@
       transition: all 0.3s;
       padding: 20px;
 
+      > p{
+        display: block;
+        display: -webkit-box;
+        height: rem(54);
+        margin: 0 auto;
+        font-size:  rem(18);
+        line-height: rem(18);
+        -webkit-line-clamp:2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
       &:hover{
         box-shadow: inset 0 -180px 200px 0px #333;
       }
@@ -45,7 +58,7 @@
 
       > date{
         font-size: rem(18);
-        font-weight: 400;
+        font-weight: 600;
         line-height: rem(18);
         color: $color-grey
       }

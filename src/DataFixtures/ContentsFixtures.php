@@ -24,7 +24,7 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
         for ($i=0; $i < 1000; $i++) {
             $object = (new Contents())
                 ->setType($faker->randomElements($types, $faker->numberBetween(1, 1))[0])
-                ->setTitle($faker->words($faker->numberBetween(10, 25), true))
+                ->setTitle($faker->words(6, true))
                 ->setDescription($faker->text(100))
             ;
 
@@ -42,7 +42,7 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
                     break;
             }
 
-            $objectCategory = $faker->randomElements($categories, $faker->numberBetween(1, 10));
+            $objectCategory = $faker->randomElements($categories, $faker->numberBetween(1, 5));
             foreach ($objectCategory as $category) {
                 $object->addCategory($category);
             }

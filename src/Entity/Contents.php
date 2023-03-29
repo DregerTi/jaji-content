@@ -31,11 +31,11 @@ class Contents
     #[ORM\Column(length: 255)]
     private ?string $prewiew_img = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 80)]
     #[NotBlank]
     #[Length(
         min: 3,
-        max: 255,
+        max: 80,
         minMessage: "Le titre doit faire au moins 3 caractères",
         maxMessage: "Le titre ne peut pas faire plus de 255 caractères"
     )]

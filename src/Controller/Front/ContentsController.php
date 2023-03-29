@@ -19,9 +19,13 @@ class ContentsController extends AbstractController
         $categories = $request->query->get('categories')
             ? explode(',', $request->query->get('categories'))
             : null;
+        $search = $request->query->get('search') ?? null;
+
+        $filteredContents = $contentsRepository->search($categories, $search, $page);
 
         return $this->render('front/contents/index.html.twig', [
-            'contents' => $contentsRepository->search($categories, $page),
+            'contents' => $filteredContents['results'],
+            'totalNbOfContents' => $filteredContents['count'],
             'userCategories' => $this->getUser()->getCategories(),
         ]);
     }

@@ -39,7 +39,7 @@ class ContentsRepository extends ServiceEntityRepository
         }
     }
 
-    public function search(?array $categories, int $page): array
+    public function search(?array $categories, ?string $search, int $page): array
     {
         $query = $this->createQueryBuilder('c');
 
@@ -49,11 +49,18 @@ class ContentsRepository extends ServiceEntityRepository
                 ->setParameter('categories', $categories);
         }
 
+        if ($search) {
+            $query->andWhere('c.title LIKE :search OR c.content LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        $count = count($query->getQuery()->getResult());
+
         $query->orderBy('c.createdAt', 'DESC')
             ->setFirstResult(($page - 1) * 10)
             ->setMaxResults(10);
 
-        return $query->getQuery()->getResult();
+        return ['count' => $count, 'results' => $query->getQuery()->getResult()];
     }
 
 //    /**

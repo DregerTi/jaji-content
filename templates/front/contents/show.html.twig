@@ -1,40 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contents{% endblock %}
+{% block title %}{{ content.title }}{% endblock %}
 
 {% block body %}
-    <h1>Contents</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ content.id }}</td>
-            </tr>
-            <tr>
-                <th>Prewiew_img</th>
-                {% if content.prewiewImg %}
-                    <td><img src="{{ asset(content.prewiewImg) }}" alt="prewiewImg" width="100" height="100"></td>
-                {% else %}
-                    <td>no image</td>
-                {% endif %}
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ content.title }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ content.type }}</td>
-            </tr>
-            <tr>
-                <th>Src</th>
-                <td>{{ content.src }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ content.content }}</td>
-            </tr>
+    <main class="container-lite article">
+        <header>
+            <h1 class="title">{{ content.title }}</h1>
+            <section class="flex gap-2 flex-wrap">
+                {% for categorie in content.getCategories %}
+                    {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: content.type|lower == "video" ? "blue" : content.type|lower == "podcast" ? "red" : content.type|lower == "article" ? "yellow" : null }) }}
+                {% endfor %}
+            </section>
             <tr>
                 <th>CreatedAt</th>
                 <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
@@ -43,8 +19,20 @@
                 <th>UpdatedAt</th>
                 <td>{{ content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
-        </tbody>
-    </table>
+        </header>
+        <section>
+            {% if content.type == 'Article' %}
+                <figure>
+                    <img src="{{ asset(content.prewiewImg) }}" alt="prewiewImg" width="100" height="100">
+                </figure>
+            {% else %}
+                {{ content.src|striptags('<iframe>')|raw  }}
+            {% endif %}
+        </section>
+        <p>{{ content.description }}</p>
+        <article>{{ content.content }}</article>
+
+    </main>
 
     <a href="{{ path('front_contents_index') }}">back to list</a>
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contents index{% endblock %}
+{% block title %}Mon feed{% endblock %}
 
 {% block body %}
     <div class="container-lite">
@@ -14,15 +14,11 @@
                     {% set index = index + 1 %}
                 {% endif %}
             {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
+                <tr>
+                    <div class="text-4xl text-grey p-8 font-medium" colspan="6">On a rien pour toi, bonne chance! 😢</div>
+                </tr>
+            {% endfor %}
         </section>
-        {% endfor %}
-        <a href="{{ path('back_contents_new') }}">Create new</a>
-        <div class="status">
-            <div class="loader"></div>
-        </div>
         {{ include('/components/pagination.html.twig', { count:totalNbOfContents }) }}
     </div>
 {% endblock %}

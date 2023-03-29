@@ -5,11 +5,26 @@ a {
 .container-lite{
   max-width: 1200px;
   margin: 0 auto;
+  padding-top: 0px !important;
 }
 
 .container-large{
   max-width: 1680px;
   margin: 0 auto;
+}
+
+.title{
+  font-family: 'Prompt';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 30px;
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 64px;
+  color: #355070;
+
+
 }
 
 #notyf-message {

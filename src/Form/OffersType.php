@@ -12,11 +12,12 @@ class OffersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('link')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('contents')
+            ->add('title', null, [
+                'label' => 'Titre',
+            ])
+            ->add('link', null, [
+                'label' => 'Lien',
+            ])
         ;
     }
 

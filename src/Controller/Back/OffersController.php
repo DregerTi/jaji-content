@@ -21,6 +21,7 @@ class OffersController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $offer->setCreatedAt(new \DateTime());
             $offersRepository->save($offer, true);
 
             return $this->redirectToRoute('front_offers_index', [], Response::HTTP_SEE_OTHER);
@@ -39,6 +40,7 @@ class OffersController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $offer->setUpdatedAt(new \DateTime());
             $offersRepository->save($offer, true);
 
             return $this->redirectToRoute('front_offers_index', [], Response::HTTP_SEE_OTHER);

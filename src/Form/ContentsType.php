@@ -23,7 +23,7 @@ class ContentsType extends AbstractType
 
                 'mapped' => false,
 
-                'required' => true,
+                'required' => $options['isNew'],
 
                 'constraints' => [
                     new File([
@@ -78,6 +78,7 @@ class ContentsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Contents::class,
+            'isNew' => true,
         ]);
     }
 }

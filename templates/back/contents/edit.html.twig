@@ -1,11 +1,11 @@
-{% extends '../../base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Edit Contents{% endblock %}
 
 {% block body %}
     <h1>Edit Contents</h1>
 
-    {{ include('contents/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('back/contents/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('front_contents_index') }}">back to list</a>
 

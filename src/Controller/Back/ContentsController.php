@@ -25,19 +25,7 @@ class ContentsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('image')->getData();
             if ($photoFile) {
-                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = '/images/'.$safeFilename . '-' . uniqid('', true) . '.' . $photoFile->guessExtension();
-                try {
-                    $photoFile->move(
-                        'images/',
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    //TODO voir si les flash sont gérés
-                    $this->addFlash('error', 'Erreur lors de la sauvegarde de l\'image : \n' . $e->getMessage());
-                }
-                $content->setPrewiewImg($newFilename);
+                $this->saveImage($photoFile, $slugger);
             }
 
             $content->setCreatedBy($this->getUser());
@@ -56,13 +44,20 @@ class ContentsController extends AbstractController
     #[Route('/{slug}/edit', name: 'contents_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Contents $content, ContentsRepository $contentsRepository): Response
     {
-        $form = $this->createForm(ContentsType::class, $content);
+        $form = $this->createForm(ContentsType::class, $content, ['isNew' => false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photoFile = $form->get('image')->getData();
+            if ($photoFile) {
+                $this->saveImage($photoFile, $slugger);
+            }
+
+            $content->setUpdatedBy($this->getUser());
+            $content->setUpdatedAt(new \DateTime());
             $contentsRepository->save($content, true);
 
-            return $this->redirectToRoute('contents_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_contents_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/contents/edit.html.twig', [
@@ -79,5 +74,22 @@ class ContentsController extends AbstractController
         }
 
         return $this->redirectToRoute('contents_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function saveImage($photoFile, $slugger)
+    {
+        $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $slugger->slug($originalFilename);
+        $newFilename = '/images/'.$safeFilename . '-' . uniqid('', true) . '.' . $photoFile->guessExtension();
+        try {
+            $photoFile->move(
+                'images/',
+                $newFilename
+            );
+        } catch (FileException $e) {
+            //TODO voir si les flash sont gérés
+            $this->addFlash('error', 'Erreur lors de la sauvegarde de l\'image : \n' . $e->getMessage());
+        }
+        return $newFilename;
     }
 }

@@ -15,6 +15,8 @@ class CategoriesFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
         $users = $manager->getRepository(Users::class)->findByRole('CLIENT');
+        $featherIconsList = ['activity', 'clipboard', 'droplet', 'eye', 'map', 'phone-call', 'thermometer'];
+
         $usedWords = [];
         for ($i=0; $i < 50; $i++) {
             $word = $faker->word;
@@ -29,6 +31,7 @@ class CategoriesFixtures extends Fixture implements DependentFixtureInterface
             foreach ($users as $user) {
                 $object->addUser($user);
             }
+            $object->setIconReference($faker->randomElement($featherIconsList));
             $manager->persist($object);
         }
 

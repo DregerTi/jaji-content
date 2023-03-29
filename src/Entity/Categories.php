@@ -26,6 +26,9 @@ class Categories
     #[ORM\ManyToMany(targetEntity: Contents::class, mappedBy: 'categories')]
     private Collection $contents;
 
+    #[ORM\Column(length: 50)]
+    private ?string $iconReference = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -99,6 +102,18 @@ class Categories
         if ($this->contents->removeElement($content)) {
             $content->removeCategory($this);
         }
+
+        return $this;
+    }
+
+    public function getIconReference(): ?string
+    {
+        return $this->iconReference;
+    }
+
+    public function setIconReference(string $iconReference): self
+    {
+        $this->iconReference = $iconReference;
 
         return $this;
     }

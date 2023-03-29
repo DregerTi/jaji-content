@@ -19,7 +19,7 @@ class ContentsController extends AbstractController
         $categories = $request->query->get('categories')
             ? explode(',', $request->query->get('categories'))
             : null;
-        $search = $request->query->get('search') ?? null;
+        $search = $request->query->get('search');
 
         $filteredContents = $contentsRepository->search($categories, $search, $page);
 

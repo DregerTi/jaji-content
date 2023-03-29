@@ -22,8 +22,9 @@
                     {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: type == "video" ? "blue" : type == "podcast" ? "red" : type == "article" ? "yellow" : null }) }}
                 {% endfor %}
             </section>
-            <label>{{ title }}</label>
             <date>{{ date }}</date>
+            <label>{{ title }}</label>
+            <p>{{ description }}</p>
         </section>
     </article>
 </a>

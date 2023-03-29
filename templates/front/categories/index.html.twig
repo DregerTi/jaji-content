@@ -3,39 +3,24 @@
 {% block title %}Categories index{% endblock %}
 
 {% block body %}
-    <h1>Categories index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Label</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="container-lite">
+    <h1 class="title">Mes catégories</h1>
+    <div class="categories__grid">
+        {% for category in app.user.getCategories %}
+            {{ include('/components/filter.html.twig', { name:category.label, icon:category.iconReference, clicked:true }) }}
+        {% endfor  %}
+    </div>
+    <h1 class="title">Découvrir d'autres catégories</h1>
+    <div class="categories__grid">
         {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.label }}</td>
-                <td>
-                    <a href="{{ path('front_categories_show', {'label': category.label}) }}">show</a>
-                    <a href="{{ path('back_categories_edit', {'label': category.label}) }}">edit</a>
-                    <form method="post" action="{{ path('front_categories_add_category', {'label': category.label}) }}">
-                        <button class="btn">add</button>
-                    </form>
-                    <form method="post" action="{{ path('front_categories_remove_category', {'label': category.label}) }}">
-                        <button class="btn">remove</button>
-                    </form>
-                </td>
-            </tr>
+            {% if not app.user.getCategories.contains(category) %}
+                {{ include('/components/filter.html.twig', { name:category.label, icon:category.iconReference, clicked:false }) }}
+            {% endif %}
         {% else %}
             <tr>
                 <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('back_categories_new') }}">Create new</a>
+    </div>
+</div>
 {% endblock %}

@@ -1,4 +1,10 @@
-<div class="filter {% if clicked == true %}filter--clicked{% endif %}">
-  <i data-feather="{{icon}}"></i>
-  <span>{{name}}</span>
+<div class="flex justify-center">
+  <div class="filter {% if clicked == true %}filter--clicked{% endif %}">
+    <div class="filter__container {% if clicked == true %}filter__container--clicked{% endif %}">
+      <i data-feather="{{icon}}"></i>
+      <span>{{name}}</span>
+    </div>
+  </div>
 </div>
+
+

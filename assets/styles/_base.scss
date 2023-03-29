@@ -140,3 +140,10 @@ button {
   }
 }
 
+.categories__grid {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  row-gap: 35px;
+  margin: 30px 0;
+}
+

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contenus{% endblock %}
+
+{% block body %}
+    {% embed '/components/back_office_header_and_menu.html.twig' with {'active': 'contenus'} %}
+        {% block content %}
+            <div class="flex-grow">
+                {{ include('/components/sub_header.html.twig', {
+                    title:'Contenus',
+                    text:'Vous pouvez consulter ici la liste des contenus',
+                    btnText:'Ajouter un contenu',
+                    btnPath:'back_contents_new',
+                }) }}
+
+                <section id="containerFeed" class="feed-container blocks">
+                    {% set index = 0 %}
+                    {% for content in contents %}
+                    {{ include('/components/content_preview.html.twig' , {type: content.type|lower, middle: index == 1 ? true : false, path:'back_contents_show', pathParams:{slug: content.slug}, title:content.title, date:content.updatedAt ? content.updatedAt|date('d-m-Y') : content.createdAt|date('d-m-Y'), image:asset(content.prewiewImg ), description:content.description, categories:content.getCategories }) }}
+                    {% if index == 2 %}
+                        {% set index = 0 %}
+                    {% else %}
+                        {% set index = index + 1 %}
+                    {% endif %}
+                    {% else %}
+                    <tr>
+                        <td colspan="9">no records found</td>
+                    </tr>
+                </section>
+                {% endfor %}
+                {{ include('/components/pagination.html.twig', {count: totalNbOfContents}) }}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

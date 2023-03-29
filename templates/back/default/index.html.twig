@@ -3,4 +3,16 @@
 {% block title %}Mon espace{% endblock %}
 
 {% block body %}
+    {% embed '/components/back_office_header_and_menu.html.twig' with {'active': ''} %}
+        {% block content %}
+            <div class="flex-grow max-md:hidden">
+                {{ include('/components/sub_header.html.twig', {
+                    title:'Bienvenue sur la page d\'accueil de votre espace personnel',
+                    text:'Vous pouvez consulter vos projets en cours, vos messages, vos notifications et vos paramètres.',
+                    btnText:'Accueil',
+                    btnPath:'front_default_index'
+                }) }}
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

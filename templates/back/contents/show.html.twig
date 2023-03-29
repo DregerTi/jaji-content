@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contenu{% endblock %}
+
+{% block body %}
+    {% embed '/components/back_office_header_and_menu.html.twig' with {'active': 'contents'} %}
+        {% block content %}
+            <div class="flex-grow">
+                {{ include('/components/sub_header.html.twig', {
+                    title:'Contenu',
+                    text:'Vous pouvez trouvez ici les information de ce contenu',
+                    btnText:'Éditer',
+                    btnPath:'back_contents_edit',
+                    btnPathParams: {'slug': content.slug},
+                    deleteForm:'back/contents/_delete_form.html.twig',
+                }) }}
+
+                <table class="table">
+                    <tbody>
+                    <tr class="flex flex-col gap-2 items-start mb-8">
+                        <th>Titre</th>
+                        <td>{{ content.title }}</td>
+                        <th>Slug</th>
+                        <td>{{ content.slug }}</td>
+                        <th>Image</th>
+                        <td><img src="{{ asset(content.prewiewImg) }}" alt="image de présentation"></td>
+                        <th>Type</th>
+                        <td>{{content.type}}</td>
+                        <th>Source</th>
+                        <td>{{ content.src }}</td>
+                        <th>Description</th>
+                        <td>{{ content.description }}</td>
+                        <th>Contenu</th>
+                        <td>{{ content.content }}</td>
+                        <th>Catégories</th>
+                        <td>
+                            {% for categorie in content.categories %}
+                                {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: content.type == "video" ? "blue" : content.type == "podcast" ? "red" : content.type == "article" ? "yellow" : null }) }}
+                            {% endfor %}
+                        </td>
+                        <th>Offres</th>
+                        <td>
+                            {% for offer in content.offers %}
+                                {{ offer.title }}
+                            {% else %}
+                                Aucune offre.
+                            {% endfor %}
+                        </td>
+                        <th>Nombre de sauvegardes</th>
+                        <td>{{ content.favorites|length }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

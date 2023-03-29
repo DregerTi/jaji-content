@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contenus{% endblock %}
+
+{% block body %}
+    {% embed '/components/back_office_header_and_menu.html.twig' with {'active': 'offers'} %}
+        {% block content %}
+            <div class="flex-grow">
+                {{ include('/components/sub_header.html.twig', {
+                    title:'Contenus',
+                    text:'Vous pouvez consulter ici la liste des catégories',
+                    btnText:'Ajouter une offre',
+                    btnPath:'back_offers_new',
+                }) }}
+
+                {% for offer in offers %}
+                    {{ include('/components/list_item.html.twig', {
+                        path:'back_offers_show',
+                        pathParams:{ id: offer.id},
+                        name: offer.title,
+                    }) }}
+                {% endfor %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

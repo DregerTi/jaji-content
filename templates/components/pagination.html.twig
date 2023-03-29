@@ -49,7 +49,7 @@
         {%  if app.request.get('page') != num_pages %}
             <button>
                 {% set p = app.request.get('page') is not defined or app.request.get('page') is null ? 2 : app.request.get('page') + 1 %}
-                <a class="pager__next" href="{{ path(app.request.get('_route'), params|merge({'page': p})) }}">
+                <a class="next" href="{{ path(app.request.get('_route'), params|merge({'page': p})) }}">
                     <img src="{{ asset('/build/icons/icon-arrow-left.svg') }}">
                 </a>
             </button>

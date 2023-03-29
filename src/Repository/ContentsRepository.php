@@ -57,8 +57,8 @@ class ContentsRepository extends ServiceEntityRepository
         $count = count($query->getQuery()->getResult());
 
         $query->orderBy('c.createdAt', 'DESC')
-            ->setFirstResult(($page - 1) * 10)
-            ->setMaxResults(10);
+            ->setFirstResult(($page - 1) * 12)
+            ->setMaxResults(12);
 
         return ['count' => $count, 'results' => $query->getQuery()->getResult()];
     }

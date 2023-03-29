@@ -4,7 +4,7 @@
 
 {% block body %}
     <main class="container-lite">
-        <section id="containerFeed" class="feed-container blocks">
+        <section id="containerFeed" class="feed-container containerFeed blocks">
             {% set index = 0 %}
             {% for content in contents %}
                 {{ include('/components/content_preview.html.twig' , {type: content.type|lower, middle: index == 1 ? true : false, path:'front_contents_show', pathParams:{slug: content.slug}, title:content.title, date:content.updatedAt ? content.updatedAt|date('d-m-Y') : content.createdAt|date('d-m-Y'), image:asset(content.prewiewImg ), description:content.description, categories:content.getCategories }) }}

@@ -13,6 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/categories')]
 class CategoriesController extends AbstractController
 {
+    #[Route('/', name: 'categories_index', methods: ['GET'])]
+    public function index(CategoriesRepository $categoriesRepository): Response
+    {
+        return $this->render('back/categories/index.html.twig', [
+            'categories' => $categoriesRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'categories_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CategoriesRepository $categoriesRepository): Response
     {
@@ -29,6 +37,14 @@ class CategoriesController extends AbstractController
         return $this->renderForm('back/categories/new.html.twig', [
             'category' => $category,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/{label}', name: 'categories_show', methods: ['GET'])]
+    public function show(Categories $category): Response
+    {
+        return $this->render('back/categories/show.html.twig', [
+            'category' => $category,
         ]);
     }
 

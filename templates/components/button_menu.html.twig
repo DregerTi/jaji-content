@@ -1,0 +1,4 @@
+<a href="{{ path(path, pathParams is defined ? pathParams : {} ) }}" class="flex items-center gap-3 p-3 text-base cursor-pointer max-md:w-full {{ active == true ? 'text-white bg-primary rounded-lg font-medium' : 'text-grey hover:text-primary' }}">
+    <i data-feather="{{ icon }}"></i>
+    {{ name }}
+</a>

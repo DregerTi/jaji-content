@@ -1,0 +1,14 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  &--clicked {
+    width: 7.5rem;
+    height: 7rem;
+    background-image: url(/assets/images/select.svg);
+    background-repeat: no-repeat;
+  }
+}

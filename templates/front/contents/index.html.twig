@@ -3,7 +3,7 @@
 {% block title %}Contents index{% endblock %}
 
 {% block body %}
-    <main class="container-lite">
+    <div class="container-lite">
         <section id="containerFeed" class="feed-container containerFeed blocks">
             {% set index = 0 %}
             {% for content in contents %}
@@ -24,5 +24,5 @@
             <div class="loader"></div>
         </div>
         {{ include('/components/pagination.html.twig', { count:totalNbOfContents }) }}
-    </main>
+    </div>
 {% endblock %}

@@ -20,33 +20,38 @@
     <body>
         <header class="header">
             <div class="header__content container mx-auto">
-                <form method="GET" action="#" class="flex left-container items-center">
+                <div class="flex left-container items-center">
                     <a href="{{ path('front_default_index') }}">
                         <img class="logo max-md:hidden" src="{{ asset('build/icons/logo.svg') }}" alt="logo">
                         <img class="logo md:hidden lg:hidden xl:hidden" src="{{ asset('build/icons/logo-mobile.svg') }}" alt="logo">
                     </a>
-                    <input name="search" type="text" class="search-bar w-full" value="{{ app.request.query.get('search') }}" placeholder="Que cherchez-vous ?">
-                </form>
-
-                <nav class="header-navigation space-x-5 max-md:hidden">
-                    <a href=""><i data-feather="bookmark"></i></a>
-                    <a href=""><i data-feather="settings"></i></a>
-                    <a class="max-lg:hidden" href="{{ path('app_logout') }}">Se déconnecter</a>
-                    <a class="max-md:hidden lg:hidden xl:hidden" href="{{ path('app_logout') }}"><i data-feather="log-out"></i></a>
-                </nav>
+                    {% if app.request.get('_route') != 'app_login' %}
+                    <form method="GET" action="#" class="w-full">
+                        <input name="search" type="text" class="search-bar w-full" value="{{ app.request.query.get('search') }}" placeholder="Que cherchez-vous ?">
+                    </form>
+                    {% endif %}
+                </div>
+                {% if app.request.get('_route') != 'app_login' %}
+                    <nav class="header-navigation space-x-5 max-md:hidden">
+                        <a href=""><i data-feather="bookmark"></i></a>
+                        <a href=""><i data-feather="sliders"></i></a>
+                        <a class="max-lg:hidden" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        <a class="max-md:hidden lg:hidden xl:hidden" href="{{ path('app_logout') }}"><i data-feather="log-out"></i></a>
+                    </nav>
+                {% endif %}
             </div>
         </header>
-
-        <header class="headerMobile max-md:block">
-        <div class="headerMobile__content container mx-auto">
-            <a class="headerMobile__icon {% if app.request.get('_route') == 'front_default_index' %}headerMobile__icon--active{% endif %}" href="{{ path('front_default_index') }}"><i data-feather="home"></i></a>
-            <a class="headerMobile__icon" href=""><i data-feather="search"></i></a>
-            <a class="headerMobile__icon" href=""><i data-feather="bookmark"></i></a>
-            <a class="headerMobile__icon" href=""><i data-feather="settings"></i></a>
-            <a class="headerMobile__icon" href="{{ path('app_logout') }}"><i data-feather="log-out"></i></a>
-        </div>
-            
-        </header>
+        
+        {% if app.request.get('_route') != 'app_login' %}
+            <header class="headerMobile max-md:block">
+                <div class="headerMobile__content container mx-auto">
+                    <a class="headerMobile__icon {% if app.request.get('_route') == 'front_default_index' %}headerMobile__icon--active{% endif %}" href="{{ path('front_default_index') }}"><i data-feather="home"></i></a>
+                    <a class="headerMobile__icon" href=""><i data-feather="bookmark"></i></a>
+                    <a class="headerMobile__icon" href=""><i data-feather="sliders"></i></a>
+                    <a class="headerMobile__icon" href="{{ path('app_logout') }}"><i data-feather="log-out"></i></a>
+                </div>
+            </header>
+        {% endif %}
 
         <div class="container mx-auto">
             <main>

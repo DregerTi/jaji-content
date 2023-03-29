@@ -9,7 +9,9 @@
                         {% if deleteForm is defined and deleteForm != '' %}
                                 {{ include(deleteForm) }}
                         {% endif %}
-                        {{ include('/components/button.html.twig', {text:btnText, fill: true, path:btnPath, pathParams: btnPathParams is defined ? btnPathParams : {} }) }}
+                        {% if btnText is defined and btnPath is defined %}
+                                {{ include('/components/button.html.twig', {text:btnText, fill: true, path:btnPath, pathParams: btnPathParams is defined ? btnPathParams : {} }) }}
+                        {% endif %}  
                 </div>
         </div>
 

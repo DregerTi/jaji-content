@@ -7,8 +7,6 @@
     {{ include('/components/sub_header.html.twig', {
         title:'Connexion',
         text:'Connectez-vous pour accéder à votre compte',
-        btnText:'Accueil',
-        btnPath:'front_default_index'
     }) }}
 
     <form method="post">
@@ -34,16 +32,6 @@
                 value="{{ csrf_token('authenticate') }}"
         >
 
-        {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-        #}
         <button class="button button-filled button-text" formnovalidate>
             Connexion
         </button>

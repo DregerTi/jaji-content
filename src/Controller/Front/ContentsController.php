@@ -26,7 +26,7 @@ class ContentsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'contents_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[Route('/{slug}', name: 'contents_show', methods: ['GET'])]
     public function show(Contents $content): Response
     {
         return $this->render('front/contents/show.html.twig', [

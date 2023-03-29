@@ -7,7 +7,7 @@
 
     {{ include('contents/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_contents_index') }}">back to list</a>
+    <a href="{{ path('front_contents_index') }}">back to list</a>
 
-    {{ include('contents/_delete_form.html.twig') }}
+    {{ include('back/contents/_delete_form.html.twig') }}
 {% endblock %}

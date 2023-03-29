@@ -5,8 +5,8 @@
 {% block body %}
 
     {% for content in contents %}
-        {{ include('/components/content_preview.html.twig', {type: content.type|lower, path:'front_contents_show', pathParams:{id: content.id}, title:content.title, date:content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : content.createdAt|date('Y-m-d H:i:s'), image:asset(content.prewiewImg ), categories:content.getCategories }) }}
-        <a href="{{ path('back_contents_edit', {'id': content.id}) }}">edit</a>
+        {{ include('/components/content_preview.html.twig', {type: content.type|lower, path:'front_contents_show', pathParams:{slug: content.slug}, title:content.title, date:content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : content.createdAt|date('Y-m-d H:i:s'), image:asset(content.prewiewImg ), categories:content.getCategories }) }}
+        <a href="{{ path('back_contents_edit', {'slug': content.slug}) }}">edit</a>
     {% else %}
         <tr>
             <td colspan="9">no records found</td>

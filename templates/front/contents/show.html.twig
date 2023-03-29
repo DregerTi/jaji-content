@@ -48,7 +48,7 @@
 
     <a href="{{ path('front_contents_index') }}">back to list</a>
 
-    <a href="{{ path('back_contents_edit', {'id': content.id}) }}">edit</a>
+    <a href="{{ path('back_contents_edit', {'slug': content.slug}) }}">edit</a>
 
     {{ include('back/contents/_delete_form.html.twig') }}
 {% endblock %}

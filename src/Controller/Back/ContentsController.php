@@ -53,7 +53,7 @@ class ContentsController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/{id}/edit', name: 'contents_edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}/edit', name: 'contents_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Contents $content, ContentsRepository $contentsRepository): Response
     {
         $form = $this->createForm(ContentsType::class, $content);
@@ -71,7 +71,7 @@ class ContentsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'contents_delete', methods: ['POST'])]
+    #[Route('/{slug}', name: 'contents_delete', methods: ['POST'])]
     public function delete(Request $request, Contents $content, ContentsRepository $contentsRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$content->getId(), $request->request->get('_token'))) {

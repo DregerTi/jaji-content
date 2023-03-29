@@ -1,13 +1,17 @@
 .header {
-  background-color: $color-lightgrey;
+  background-color: $color-background;
   padding: 1rem 0rem;
   z-index: 2;
   position: fixed;
-  width: 100vw;
+  width: 100%;
   top: 0;
   margin-bottom: 100%;
 
-  &-content {
+  @media (max-width: 768px) {
+    padding: 0.1rem 0rem;
+  }
+
+  &__content {
     display: flex;
     align-items: center;
   }
@@ -19,6 +23,34 @@
   .logo{
     width: 48px;
     height: 48px;
+  }
+}
+
+.headerMobile {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  background-color: $color-background;
+  padding: 0rem;
+  bottom: 0;
+  margin-bottom: 0;
+  border-top: 1px solid $color-border;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__icon {
+    width: rem(24);
+    height: rem(24);
+    margin: 1rem;
+
+    &--active svg{
+      color: $color-success;
+    }
   }
 }
 
@@ -40,6 +72,7 @@
   border-radius: 0.8rem;
 
   a {
+    color: $color-text;
     white-space: nowrap;
     font-weight: 500;
   }

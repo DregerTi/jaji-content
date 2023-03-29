@@ -12,7 +12,6 @@ class OffersFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
-        $offers = $manager->getRepository(Offers::class)->findAll();
 
         $object = (new Offers())
             ->setTitle('dentaire')

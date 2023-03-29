@@ -19,8 +19,14 @@
                 <td>{{ category.id }}</td>
                 <td>{{ category.label }}</td>
                 <td>
-                    <a href="{{ path('front_categories_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('back_categories_edit', {'id': category.id}) }}">edit</a>
+                    <a href="{{ path('front_categories_show', {'label': category.label}) }}">show</a>
+                    <a href="{{ path('back_categories_edit', {'label': category.label}) }}">edit</a>
+                    <form method="post" action="{{ path('front_categories_add_category', {'label': category.label}) }}">
+                        <button class="btn">add</button>
+                    </form>
+                    <form method="post" action="{{ path('front_categories_remove_category', {'label': category.label}) }}">
+                        <button class="btn">remove</button>
+                    </form>
                 </td>
             </tr>
         {% else %}

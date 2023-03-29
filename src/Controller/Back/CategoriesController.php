@@ -32,7 +32,7 @@ class CategoriesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'categories_edit', methods: ['GET', 'POST'])]
+    #[Route('/{label}/edit', name: 'categories_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Categories $category, CategoriesRepository $categoriesRepository): Response
     {
         $form = $this->createForm(CategoriesType::class, $category);
@@ -50,7 +50,7 @@ class CategoriesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'categories_delete', methods: ['POST'])]
+    #[Route('/{label}', name: 'categories_delete', methods: ['POST'])]
     public function delete(Request $request, Categories $category, CategoriesRepository $categoriesRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {

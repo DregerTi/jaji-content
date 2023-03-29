@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FavoritesController extends AbstractController
 {
     #[Route('/my-favorites', name: 'my_favorites', methods: ['GET'])]
-    #[Security('is_granted("ROLE_USER")')]
+    #[Security('is_granted("ROLE_CLIENT")')]
     public function index(): Response
     {
         return $this->render('front/favorites/index.html.twig', [
@@ -25,17 +25,15 @@ class FavoritesController extends AbstractController
     }
 
     #[Route('/new/{slug}', name: 'favorites_new', methods: ['POST'])]
-    #[Security('is_granted("ROLE_USER")')]
+    #[Security('is_granted("ROLE_CLIENT")')]
     public function new(FavoritesRepository $favoritesRepository, Contents $content): Response
     {
-        if ($content) {
-            $favorite = new Favorites();
-            $favorite->setContent($content);
-            $favorite->setLiker($this->getUser());
-            $favoritesRepository->save($favorite, true);
+        $favorite = new Favorites();
+        $favorite->setContent($content);
+        $favorite->setLiker($this->getUser());
+        $favoritesRepository->save($favorite, true);
 
-            return $this->redirectToRoute('front_favorites_index', [], Response::HTTP_SEE_OTHER);
-        }
+        return $this->redirectToRoute('front_favorites_index', [], Response::HTTP_SEE_OTHER);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $favoritesRepository->save($favorite, true);

@@ -44,7 +44,8 @@ class FavoritesRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('f')
             ->where('f.liker = :userId')
             ->orderBy('f.id', 'ASC')
-            ->setFirstResult(($page - 1) * 10)
+            ->setFirstResult(($page - 1) * 12)
+            ->setParameter('userId', $userId)
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();

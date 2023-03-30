@@ -1,0 +1,35 @@
+.form {
+  &--label{
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: #5D738D;
+  }
+
+  &--input{
+    background: #FFFFFF;
+    border: 1px solid #E1E5EA;
+    border-radius: 4px;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #CDD3DB;
+    color: #355070;
+    transition: all 0.3s;
+
+    &:focus{
+      border: 1px solid #75A3E3;
+    }
+  }
+}
+
+
+
+
+

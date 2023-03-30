@@ -6,20 +6,20 @@
 <div class="container-lite">
     <h1 class="title">Mes catégories</h1>
     <div class="categories__grid">
-        {% for category in app.user.getCategories %}
+        {% for category in app.user.categories %}
             {{ include('/components/filter.html.twig', { name:category.label, icon:category.iconReference, clicked:true }) }}
-        {% endfor  %}
+        {% else %}
+            <p>Vous n'avez pas encore ajouté de catégorie 😪</p>
+        {% endfor %}
     </div>
     <h1 class="title">Découvrir d'autres catégories</h1>
     <div class="categories__grid">
         {% for category in categories %}
-            {% if not app.user.getCategories.contains(category) %}
+            {% if not app.user.categories.contains(category) %}
                 {{ include('/components/filter.html.twig', { name:category.label, icon:category.iconReference, clicked:false }) }}
             {% endif %}
         {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
+            <p>Aucune catégorie existante 😢</p>
         {% endfor %}
     </div>
 </div>

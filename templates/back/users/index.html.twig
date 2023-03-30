@@ -1,43 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Users index{% endblock %}
+{% block title %}Contenus{% endblock %}
 
 {% block body %}
-    <h1>Users index</h1>
+    {% embed '/components/back_office_header_and_menu.html.twig' with {'active': 'categories'} %}
+        {% block content %}
+            <div class="flex-grow">
+                {{ include('/components/sub_header.html.twig', {
+                    title:'Contenus',
+                    text:'Vous pouvez consulter ici la liste des utilisateurs',
+                }) }}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.lastname }}</td>
-                <td>
-                    <a href="{{ path('app_users_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_users_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_users_new') }}">Create new</a>
+                {% for user in users %}
+                    {{ include('/components/list_item.html.twig', {
+                        path:'back_users_show',
+                        pathParams:{ id: user.id},
+                        name: user.firstname ~ ' ' ~ user.lastname,
+                    }) }}
+                {% endfor %}
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

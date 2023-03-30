@@ -25,6 +25,13 @@
                         name:'Offres',
                         active: active == 'offers' ? true : false
                     }) }}
+                    {{ include('/components/button_menu.html.twig', {
+                        path:'back_users_index',
+                        icon:'users',
+                        iconSize:'22',
+                        name:'Utilisateurs',
+                        active: active == 'users' ? true : false
+                    }) }}
                 </div>
             </div>
         </div>

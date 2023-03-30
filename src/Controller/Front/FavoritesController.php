@@ -15,12 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/favorites')]
 class FavoritesController extends AbstractController
 {
-    #[Route('/my-favorites', name: 'my_favorites', methods: ['GET'])]
+    #[Route('/', name: 'my_favorites', methods: ['GET'])]
     #[Security('is_granted("ROLE_CLIENT")')]
-    public function index(): Response
+    public function index(Request $request, FavoritesRepository $favoritesRepository): Response
     {
         return $this->render('front/favorites/index.html.twig', [
-            'favorites' => $this->getUser()->getFavorites(),
+            'favorites' => $favoritesRepository->searchMyFavorites($this->getUser()->getId(), $request->query->get('page') ?? 1),
         ]);
     }
 
@@ -33,18 +33,9 @@ class FavoritesController extends AbstractController
         $favorite->setLiker($this->getUser());
         $favoritesRepository->save($favorite, true);
 
+        $this->addFlash('success', $content->getTitle().' a bien été ajouté à votre liste.');
+
         return $this->redirectToRoute('front_favorites_index', [], Response::HTTP_SEE_OTHER);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $favoritesRepository->save($favorite, true);
-
-            return $this->redirectToRoute('front_favorites_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('back/favorites/new.html.twig', [
-            'favorite' => $favorite,
-            'form' => $form,
-        ]);
     }
 
     #[Route('/{id}', name: 'favorites_delete', methods: ['POST'])]
@@ -53,6 +44,7 @@ class FavoritesController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$favorite->getId(), $request->request->get('_token'))) {
             $favoritesRepository->remove($favorite, true);
+            $this->addFlash('success', $favorite->getContent()->getTitle().' a bien été retiré de votre liste.');
         }
 
         return $this->redirectToRoute('front_favorites_index', [], Response::HTTP_SEE_OTHER);

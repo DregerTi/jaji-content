@@ -31,7 +31,12 @@ class CategoriesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoriesRepository->save($category, true);
 
+            $this->addFlash('success', $category->getLabel().' a bien été ajouté.');
             return $this->redirectToRoute('front_categories_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($form->isSubmitted()) {
+            $this->addFlash('error', 'Une erreur est survenue.');
         }
 
         return $this->renderForm('back/categories/new.html.twig', [
@@ -57,7 +62,12 @@ class CategoriesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoriesRepository->save($category, true);
 
+            $this->addFlash('success', $category->getLabel().' a bien été modifié.');
             return $this->redirectToRoute('front_categories_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($form->isSubmitted()) {
+            $this->addFlash('error', 'Une erreur est survenue.');
         }
 
         return $this->renderForm('back/categories/edit.html.twig', [
@@ -71,6 +81,7 @@ class CategoriesController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $categoriesRepository->remove($category, true);
+            $this->addFlash('success', $category->getLabel().' a bien été supprimé.');
         }
 
         return $this->redirectToRoute('front_categories_index', [], Response::HTTP_SEE_OTHER);

@@ -33,18 +33,9 @@ class FavoritesController extends AbstractController
         $favorite->setLiker($this->getUser());
         $favoritesRepository->save($favorite, true);
 
+        $this->addFlash('success', $content->getTitle().' a bien été ajouté à votre liste.');
+
         return $this->redirectToRoute('front_favorites_index', [], Response::HTTP_SEE_OTHER);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $favoritesRepository->save($favorite, true);
-
-            return $this->redirectToRoute('front_favorites_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('back/favorites/new.html.twig', [
-            'favorite' => $favorite,
-            'form' => $form,
-        ]);
     }
 
     #[Route('/{id}', name: 'favorites_delete', methods: ['POST'])]
@@ -53,6 +44,7 @@ class FavoritesController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$favorite->getId(), $request->request->get('_token'))) {
             $favoritesRepository->remove($favorite, true);
+            $this->addFlash('success', $favorite->getContent()->getTitle().' a bien été retiré de votre liste.');
         }
 
         return $this->redirectToRoute('front_favorites_index', [], Response::HTTP_SEE_OTHER);

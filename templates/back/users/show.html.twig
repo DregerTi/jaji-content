@@ -1,42 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Users{% endblock %}
+{% block title %}Utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Users</h1>
+    {% embed '/components/back_office_header_and_menu.html.twig' with {'active': 'users'} %}
+        {% block content %}
+            <div class="flex-grow">
+                {{ include('/components/sub_header.html.twig', {
+                    title:'Utilisateur',
+                    text:'Vous pouvez trouvez ici les information de cet utilisateur',
+                    deleteForm:'back/users/_delete_form.html.twig',
+                }) }}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ user.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ user.lastname }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <table class="table">
+                    <tbody>
+                    <tr class="flex flex-col gap-2 items-start mb-8">
+                        <th>Nom</th>
+                        <td>{{ user.firstname ~ ' ' ~ user.lastname }}</td>
+                        <th>Email</th>
+                        <td>{{ user.email }}</td>
+                        <th>Rôles</th>
+                        <td>
+                            {% for role in user.roles %}
+                                {% if role != 'ROLE_USER' %}
+                                    {{ role | replace({'ROLE_': ''}) }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        {% if 'ROLE_CLIENT' in user.roles %}
+                            <th>Catégories</th>
+                            <td>
+                                {% for categorie in user.categories %}
+                                    {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: 'blue' }) }}
+                                {% endfor %}
+                            </td>
 
-    <a href="{{ path('app_users_index') }}">back to list</a>
+                            <th>Nombre de sauvegardes</th>
+                            <td>{{ user.favorites|length }}</td>
+                        {% endif %}
+                    </tr>
+                    </tbody>
+                </table>
 
-    <a href="{{ path('app_users_edit', {'id': user.id}) }}">edit</a>
-
-    {{ include('users/_delete_form.html.twig') }}
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

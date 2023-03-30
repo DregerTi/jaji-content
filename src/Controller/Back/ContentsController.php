@@ -50,8 +50,13 @@ class ContentsController extends AbstractController
             $content->setCreatedAt(new \DateTime());
 
             $contentsRepository->save($content, true);
+            $this->addFlash('success', $content->getTitle().' a bien été ajouté.');
 
             return $this->redirectToRoute('front_contents_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($form->isSubmitted()) {
+            $this->addFlash('error', 'Une erreur est survenue.');
         }
 
         return $this->renderForm('back/contents/new.html.twig', [
@@ -84,7 +89,13 @@ class ContentsController extends AbstractController
             $content->setUpdatedAt(new \DateTime());
             $contentsRepository->save($content, true);
 
+            $this->addFlash('success', $content->getTitle().' a bien été modifié.');
+
             return $this->redirectToRoute('front_contents_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($form->isSubmitted()) {
+            $this->addFlash('error', 'Une erreur est survenue.');
         }
 
         return $this->renderForm('back/contents/edit.html.twig', [
@@ -98,6 +109,7 @@ class ContentsController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$content->getId(), $request->request->get('_token'))) {
             $contentsRepository->remove($content, true);
+            $this->addFlash('success', $content->getTitle().' a bien été supprimé.');
         }
 
         return $this->redirectToRoute('contents_index', [], Response::HTTP_SEE_OTHER);

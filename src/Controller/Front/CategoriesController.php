@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoriesController extends AbstractController
 {
     #[Route('/', name: 'categories_index', methods: ['GET'])]
+    #[Security('is_granted("ROLE_CLIENT")')]
     public function index(CategoriesRepository $categoriesRepository): Response
     {
         return $this->render('front/categories/index.html.twig', [
@@ -30,21 +31,12 @@ class CategoriesController extends AbstractController
         ]);
     }
 
-    #[Route('/my-categories', name: 'categories_my_categories', methods: ['GET'])]
-    #[Security('is_granted("ROLE_CLIENT")')]
-    public function myCategories(): Response
-    {
-        return $this->render('front/categories/my_categories.html.twig', [
-            'categories' => $this->getUser()->getCategories(),
-        ]);
-    }
-
     #[Route('/add/{label}', name: 'categories_add_category', methods: ['POST'])]
-    #[Security('is_granted("ROLE_CLIENT")')]
     public function addCategory(UsersRepository $usersRepository, Categories $category): Response
     {
         $this->getUser()->addCategory($category);
         $usersRepository->save($this->getUser(), true);
+        $this->addFlash('success', $category->getLabel().' a bien été ajouté à votre liste.');
         return $this->redirectToRoute('front_categories_index', [], Response::HTTP_SEE_OTHER);
     }
 
@@ -54,6 +46,7 @@ class CategoriesController extends AbstractController
     {
         $this->getUser()->removeCategory($category);
         $usersRepository->save($this->getUser(), true);
+        $this->addFlash('success', $category->getLabel().' a bien été retiré de votre liste.');
         return $this->redirectToRoute('front_categories_index', [], Response::HTTP_SEE_OTHER);
     }
 }

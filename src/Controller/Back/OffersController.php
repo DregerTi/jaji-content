@@ -40,8 +40,13 @@ class OffersController extends AbstractController
             );
 
             $hub->publish($update);
+            $this->addFlash('success', $offer->getTitle().' a bien été ajouté.');
 
             return $this->redirectToRoute('front_offers_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($form->isSubmitted()) {
+            $this->addFlash('error', 'Une erreur est survenue.');
         }
 
         return $this->renderForm('back/offers/new.html.twig', [
@@ -68,7 +73,13 @@ class OffersController extends AbstractController
             $offer->setUpdatedAt(new \DateTime());
             $offersRepository->save($offer, true);
 
+            $this->addFlash('success', $offer->getTitle().' a bien été modifié.');
+
             return $this->redirectToRoute('front_offers_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($form->isSubmitted()) {
+            $this->addFlash('error', 'Une erreur est survenue.');
         }
 
         return $this->renderForm('back/offers/edit.html.twig', [
@@ -82,6 +93,7 @@ class OffersController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
             $offersRepository->remove($offer, true);
+            $this->addFlash('success', $offer->getTitle().' a bien été supprimé.');
         }
 
         return $this->redirectToRoute('front_offers_index', [], Response::HTTP_SEE_OTHER);

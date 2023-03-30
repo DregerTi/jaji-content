@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/favorites')]
 class FavoritesController extends AbstractController
 {
-    #[Route('/', name: 'my_favorites', methods: ['GET'])]
+    #[Route('/', name: 'favorites_index', methods: ['GET'])]
     #[Security('is_granted("ROLE_CLIENT")')]
     public function index(Request $request, FavoritesRepository $favoritesRepository): Response
     {

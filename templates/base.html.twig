@@ -25,16 +25,26 @@
                         <img class="logo max-md:hidden" src="{{ asset('build/icons/logo.svg') }}" alt="logo">
                         <img class="logo md:hidden lg:hidden xl:hidden" src="{{ asset('build/icons/logo-mobile.svg') }}" alt="logo">
                     </a>
-                    {% if app.request.get('_route') != 'app_login' %}
+                    {% if app.request.get('_route') == 'app_login' %}
+                </div>
+                {% else %}
                     <form method="GET" action="#" class="w-full">
                         <input name="search" type="text" class="search-bar w-full" value="{{ app.request.query.get('search') }}" placeholder="Que cherchez-vous ?">
                     </form>
-                    {% endif %}
                 </div>
-                {% if app.request.get('_route') != 'app_login' %}
                     <nav class="header-navigation space-x-5 max-md:hidden">
-                        <a href=""><i data-feather="bookmark"></i></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {{ include('/components/button.html.twig', {
+                        path:'back_default_index',
+                        text:'Administration',
+                        icon: 'lock',
+                        fill: false,
+                        variant: 'admin',
+                    }) }}
+                    {% else %}
+                        <a href="{{ path('front_favorites_index') }}"><i data-feather="bookmark"></i></a>
                         <a href="{{ path('front_categories_index') }}"><i data-feather="sliders"></i></a>
+                    {% endif %}
                         <a class="max-lg:hidden" href="{{ path('app_logout') }}">Se déconnecter</a>
                         <a class="max-md:hidden lg:hidden xl:hidden" href="{{ path('app_logout') }}"><i data-feather="log-out"></i></a>
                     </nav>
@@ -46,7 +56,7 @@
             <header class="headerMobile max-md:block">
                 <div class="headerMobile__content container mx-auto">
                     <a class="headerMobile__icon {% if app.request.get('_route') == 'front_default_index' %}headerMobile__icon--active{% endif %}" href="{{ path('front_default_index') }}"><i data-feather="home"></i></a>
-                    <a class="headerMobile__icon" href=""><i data-feather="bookmark"></i></a>
+                    <a class="headerMobile__icon" href="{{ path('front_favorites_index') }}"><i data-feather="bookmark"></i></a>
                     <a class="headerMobile__icon" href="{{ path('front_categories_index') }}"><i data-feather="sliders"></i></a>
                     <a class="headerMobile__icon" href="{{ path('app_logout') }}"><i data-feather="log-out"></i></a>
                 </div>

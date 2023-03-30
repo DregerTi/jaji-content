@@ -1,16 +1,14 @@
 .button {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  padding: rem(6) rem(15);
-  border: 3px solid $color-grey;
-  color: $color-grey;
-  border-radius: 1em;
-  gap: rem(10);
-  width: fit-content;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-weight: 700;
-  font-size: rem(16);
+  padding: 8px 16px;
+  gap: 8px;
+  background: #355070;
+  border: 1px solid #1F2F42;
+  box-shadow: 0px 2px 4px rgba(23, 43, 77, 0.15);
+  border-radius: 4px!important;
 
   &:hover {
     background-color: $color-grey;
@@ -43,25 +41,29 @@
   }
 
   &-red {
-    border-radius: 1em;
-    background-color: $color-error!important;
-    color: $color-white;
+    background: #FFFFFF;
+    border: 1px solid #E1E5EA;
+    box-shadow: 0px 2px 4px rgba(23, 43, 77, 0.15);
+    background-color: #FFFFFF!important;
+    color: $color-error;
     border: none;
 
     &:hover {
-      background-color: #81000e!important;
+      background-color: $color-error!important;
       color: $color-white;
     }
   }
 
   &-green {
+    background: #FFFFFF;
+    border: 1px solid #E1E5EA;
+    box-shadow: 0px 2px 4px rgba(23, 43, 77, 0.15);
     border-radius: 1em;
-    background-color: $color-success!important;
-    color: $color-white;
-    border: none;
+    background-color: #FFFFFF!important;
+    color: $color-success;
 
     &:hover {
-      background-color: #20683b!important;
+      background-color: $color-success!important;
       color: $color-white;
     }
   }

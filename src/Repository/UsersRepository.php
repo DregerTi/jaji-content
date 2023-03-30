@@ -67,6 +67,25 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         return $query->getQuery()->getResult();
     }
 
+    public function search(?array $names, ?string $role) {
+        $query = $this->createQueryBuilder('u');
+        if ($names) {
+            $i =0;
+            foreach ($names as $value) {
+                ++$i;
+                $query->orWhere('u.firstname LIKE :name'.$i.' OR u.lastname LIKE :name'.$i)
+                    ->setParameter('name'.$i, '%'.$value.'%');
+            }
+        }
+
+        if ($role) {
+            $query->andWhere("JSON_GET_TEXT(u.roles, 0) LIKE :role ")
+                ->setParameter('role', '%'.$role.'%');
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Users[] Returns an array of Users objects
 //     */

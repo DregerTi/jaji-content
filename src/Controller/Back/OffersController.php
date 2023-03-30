@@ -42,7 +42,7 @@ class OffersController extends AbstractController
             $hub->publish($update);
             $this->addFlash('success', $offer->getTitle().' a bien été ajouté.');
 
-            return $this->redirectToRoute('front_offers_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_offers_index', [], Response::HTTP_SEE_OTHER);
         }
 
         if ($form->isSubmitted()) {
@@ -75,7 +75,7 @@ class OffersController extends AbstractController
 
             $this->addFlash('success', $offer->getTitle().' a bien été modifié.');
 
-            return $this->redirectToRoute('front_offers_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_offers_index', [], Response::HTTP_SEE_OTHER);
         }
 
         if ($form->isSubmitted()) {
@@ -96,6 +96,6 @@ class OffersController extends AbstractController
             $this->addFlash('success', $offer->getTitle().' a bien été supprimé.');
         }
 
-        return $this->redirectToRoute('front_offers_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_offers_index', [], Response::HTTP_SEE_OTHER);
     }
 }

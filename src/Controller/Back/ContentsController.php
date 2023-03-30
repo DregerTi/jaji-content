@@ -91,7 +91,7 @@ class ContentsController extends AbstractController
 
             $this->addFlash('success', $content->getTitle().' a bien été modifié.');
 
-            return $this->redirectToRoute('front_contents_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_contents_index', [], Response::HTTP_SEE_OTHER);
         }
 
         if ($form->isSubmitted()) {
@@ -112,7 +112,7 @@ class ContentsController extends AbstractController
             $this->addFlash('success', $content->getTitle().' a bien été supprimé.');
         }
 
-        return $this->redirectToRoute('contents_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_contents_index', [], Response::HTTP_SEE_OTHER);
     }
 
     private function saveImage($photoFile, $slugger)

@@ -1,13 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig'%}
 
-{% block title %}Edit Categories{% endblock %}
+{% block title %}Édition de contenu{% endblock %}
 
 {% block body %}
-    <h1>Edit Categories</h1>
+    {% embed '/components/back_office_header_and_menu.html.twig' with {'active': 'categories'} %}
+        {% block content %}
+            <div class="flex-grow">
+                {{ include('/components/sub_header.html.twig', {
+                    title:'Catégories',
+                    text:'Éditez ici une catégorie',
+                    btnText:'Retour',
+                    btnPath:'back_categories_show',
+                    btnPathParams:{label: category.label}
+                }) }}
 
-    {{ include('back/categories/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('front_categories_index') }}">back to list</a>
-
-    {{ include('back/categories/_delete_form.html.twig') }}
+                {{ include('back/categories/_form.html.twig') }}
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

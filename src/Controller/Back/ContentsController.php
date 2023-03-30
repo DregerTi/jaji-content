@@ -22,9 +22,10 @@ class ContentsController extends AbstractController
         $categories = $request->query->get('categories')
             ? explode(',', $request->query->get('categories'))
             : null;
-        $search = $request->query->get('search') ?? null;
+        $search = $request->query->get('search');
+        $sortByCreationDate = $request->query->get('sortByCreationDate');
 
-        $filteredContents = $contentsRepository->search($categories, $search, $page);
+        $filteredContents = $contentsRepository->search($categories, $search, $page, $sortByCreationDate);
 
         return $this->render('back/contents/index.html.twig', [
             'contents' => $filteredContents['results'],
@@ -116,7 +117,7 @@ class ContentsController extends AbstractController
         return $this->redirectToRoute('back_contents_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    private function saveImage($photoFile, $slugger)
+    private function saveImage($photoFile, $slugger): string
     {
         $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $slugger->slug($originalFilename);

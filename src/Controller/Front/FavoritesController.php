@@ -15,12 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/favorites')]
 class FavoritesController extends AbstractController
 {
-    #[Route('/my-favorites', name: 'my_favorites', methods: ['GET'])]
+    #[Route('/', name: 'my_favorites', methods: ['GET'])]
     #[Security('is_granted("ROLE_CLIENT")')]
-    public function index(): Response
+    public function index(Request $request, FavoritesRepository $favoritesRepository): Response
     {
         return $this->render('front/favorites/index.html.twig', [
-            'favorites' => $this->getUser()->getFavorites(),
+            'favorites' => $favoritesRepository->searchMyFavorites($this->getUser()->getId(), $request->query->get('page') ?? 1),
         ]);
     }
 

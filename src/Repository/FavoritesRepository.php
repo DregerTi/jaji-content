@@ -39,6 +39,17 @@ class FavoritesRepository extends ServiceEntityRepository
         }
     }
 
+    public function searchMyFavorites(int $userId, int $page): array
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.liker = :userId')
+            ->orderBy('f.id', 'ASC')
+            ->setFirstResult(($page - 1) * 10)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Favorites[] Returns an array of Favorites objects
 //     */

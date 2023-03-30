@@ -50,7 +50,12 @@
             {% endif %}
         </section>
         <p>{{ content.description }}</p>
-        <article>{{ content.content|raw }}</article>
-
+        <article class="mb-6">{{ content.content|raw }}</article>
+        {% for offer in content.offers %}
+            {{ include('/components/offer.html.twig', {
+                path:offer.link,
+                text:'Inclus dans l\'offre ' ~ offer.title,
+            }) }}
+        {% endfor %}
     </div>
 {% endblock %}

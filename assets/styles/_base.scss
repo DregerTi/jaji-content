@@ -21,10 +21,14 @@ a {
   line-height: 64px;
   color: #355070;
 
+  margin-left: 0px!important;
+
   @media (max-width: 768px) {
     font-size: 24px;
-    line-height: 48px;
-    margin: 1rem;
+    line-height: 24px;
+    margin-left: 0px!important;
+    margin-top: 1em;
+    margin-bottom: 1em;
   }
 }
 
@@ -61,7 +65,7 @@ a {
 
 body{
   main{
-    padding-top: 120px!important;
+    padding-top: 120px;
     padding-bottom: 100px;
   }
 }
@@ -71,9 +75,11 @@ body{
 }
 
 @media (max-width: 768px) {
+  main {
+    padding-top: 60px !important;
+  }
   .container-lite{
-    width: calc(100% + 30px);
-    margin: 0 -15px;
+    width: calc(100%);
   }
 }
 

@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon espace{% endblock %}
+{% block title %}Espace Admin{% endblock %}
 
 {% block body %}
     {% embed '/components/back_office_header_and_menu.html.twig' with {'active': ''} %}
         {% block content %}
             <div class="flex-grow max-md:hidden">
                 {{ include('/components/sub_header.html.twig', {
-                    title:'Bienvenue sur la page d\'accueil de votre espace personnel',
-                    text:'Vous pouvez consulter vos projets en cours, vos messages, vos notifications et vos paramètres.',
+                    title:'Bienvenue sur la page d\'accueil de votre espace administrateur',
+                    text:'Vous pouvez consulter les contenus, catégories, offres et utilisateurs.',
                     btnText:'Accueil',
                     btnPath:'front_default_index'
                 }) }}

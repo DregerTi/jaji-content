@@ -9,6 +9,7 @@
   border: 1px solid #1F2F42;
   box-shadow: 0px 2px 4px rgba(23, 43, 77, 0.15);
   border-radius: 4px!important;
+  color: $color-white;
 
   &:hover {
     background-color: $color-grey;
@@ -84,6 +85,7 @@
       border-radius: 4px!important;
     }
   }
+
 }
 
 

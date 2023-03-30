@@ -1,5 +1,5 @@
 .article{
-  p{
+  > p{
     text-align: left;
     color: #5D738D;
     font-family: "Source Sans Pro", Sans-serif;
@@ -12,9 +12,17 @@
     margin-bottom: 40px;
   }
 
+  .content-infos{
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+  }
+
   article{
     color: #5D738D;
   }
+
+  
 
   date{
     font-family: "Source Sans Pro", Sans-serif;

@@ -6,22 +6,38 @@
     <div class="container-lite article">
         <header>
             <h1 class="title {{ content.type == 'Article' ? 'text-yellow-sub': content.type == 'Video' ? 'text-ocean-wave' : content.type == 'Podcast' ? 'text-red-light' : 'text-ocean-wave' }}">{{ content.title }}</h1>
-            <div class="flex-row">
-                <section class="flex gap-2 flex-wrap mt-5 mb-5">
-                    {% for categorie in content.getCategories %}
-                        {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: content.type|lower == "video" ? "blue" : content.type|lower == "podcast" ? "red" : content.type|lower == "article" ? "yellow" : null }) }}
-                    {% endfor %}
-                </section>
-                <date class="mt-5 mb-5">
+            <div class="flex flex-row justify-between gap-5 max-md:flex-col">
+                <div class="content-infos mt-5 mb-5">
+                    <span class="flex gap-1">
+                        {% for categorie in content.getCategories %}
+                            {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: content.type|lower == "video" ? "blue" : content.type|lower == "podcast" ? "red" : content.type|lower == "article" ? "yellow" : null }) }}
+                        {% endfor %}
+                    </span>
                     <span class="elementor-icon-list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="7" height="8" viewBox="0 0 7 8" fill="none"><circle cx="3.5" cy="4" r="3.5" fill="#5D738D"></circle></svg>
                     </span>
-                    {% if content.updatedAt %}
-                        Mis à jour le {{ content.updatedAt ? content.updatedAt|date('d-m-Y') : '' }}
-                    {% else %}
-                        Publié le {{ content.createdAt ? content.createdAt|date('d-m-Y') : '' }}
+                    <date class="">
+
+                        {% if content.updatedAt %}
+                            Mis à jour le {{ content.updatedAt ? content.updatedAt|date('d-m-Y') : '' }}
+                        {% else %}
+                            Publié le {{ content.createdAt ? content.createdAt|date('d-m-Y') : '' }}
+                        {% endif %}
+                    </date>
+                </div>
+
+                <div class="flex flex-row gap-5">
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        {{ include('/components/button.html.twig', {
+                            path:'back_contents_edit',
+                            pathParams: {'slug': content.slug},
+                            text:'Edit',
+                            fill: false,
+                        }) }}
+
+                        {{ include('back/contents/_delete_form.html.twig') }}
                     {% endif %}
-                </date>
+                </div>
             </div>
         </header>
         <section>
@@ -37,10 +53,4 @@
         <article>{{ content.content|raw }}</article>
 
     </div>
-
-    <a href="{{ path('front_contents_index') }}">back to list</a>
-
-    <a href="{{ path('back_contents_edit', {'slug': content.slug}) }}">edit</a>
-
-    {{ include('back/contents/_delete_form.html.twig') }}
 {% endblock %}

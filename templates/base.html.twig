@@ -34,7 +34,7 @@
                 {% if app.request.get('_route') != 'app_login' %}
                     <nav class="header-navigation space-x-5 max-md:hidden">
                         <a href=""><i data-feather="bookmark"></i></a>
-                        <a href=""><i data-feather="sliders"></i></a>
+                        <a href="{{ path('front_categories_index') }}"><i data-feather="sliders"></i></a>
                         <a class="max-lg:hidden" href="{{ path('app_logout') }}">Se déconnecter</a>
                         <a class="max-md:hidden lg:hidden xl:hidden" href="{{ path('app_logout') }}"><i data-feather="log-out"></i></a>
                     </nav>
@@ -47,7 +47,7 @@
                 <div class="headerMobile__content container mx-auto">
                     <a class="headerMobile__icon {% if app.request.get('_route') == 'front_default_index' %}headerMobile__icon--active{% endif %}" href="{{ path('front_default_index') }}"><i data-feather="home"></i></a>
                     <a class="headerMobile__icon" href=""><i data-feather="bookmark"></i></a>
-                    <a class="headerMobile__icon" href=""><i data-feather="sliders"></i></a>
+                    <a class="headerMobile__icon" href="{{ path('front_categories_index') }}"><i data-feather="sliders"></i></a>
                     <a class="headerMobile__icon" href="{{ path('app_logout') }}"><i data-feather="log-out"></i></a>
                 </div>
             </header>

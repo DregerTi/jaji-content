@@ -1,9 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Favorites index{% endblock %}
+{% block title %}Mes favoris{% endblock %}
 
 {% block body %}
-    {% for favorite in favorites %}
-        {{ include('/components/content_preview.html.twig', {type: favorite.content.type|lower, path:'front_contents_show', pathParams:{id: favorite.content.id}, title:favorite.content.title, date:favorite.content.updatedAt ? favorite.content.updatedAt|date('Y-m-d H:i:s') : favorite.content.createdAt|date('Y-m-d H:i:s'), image:asset(favorite.content.prewiewImg ), categories:favorite.content.getCategories }) }}
-    {% endfor %}
+    <div class="container-lite">
+        <section id="containerFeed" class="feed-container containerFeed blocks">
+            {% set index = 0 %}
+            {% for favorite in favorites %}
+                {{ include('/components/content_preview.html.twig' , {type: favorite.content.type|lower, middle: index == 1 ? true : false, path:'front_contents_show', pathParams:{slug: favorite.content.slug}, title:favorite.content.title, date:favorite.content.updatedAt ? favorite.content.updatedAt|date('d-m-Y') : favorite.content.createdAt|date('d-m-Y'), image:asset(favorite.content.prewiewImg ), description:favorite.content.description, categories:favorite.content.getCategories }) }}
+                {% if index == 2 %}
+                    {% set index = 0 %}
+                {% else %}
+                    {% set index = index + 1 %}
+                {% endif %}
+            {% else %}
+                <tr>
+                    <div class="text-4xl text-grey p-8 font-medium" colspan="6">Tu n'as pas encore un seul favori 😢</div>
+                </tr>
+            {% endfor %}
+        </section>
+        {{ include('/components/pagination.html.twig', { count:favorites|length }) }} 
+    </div>
 {% endblock %}

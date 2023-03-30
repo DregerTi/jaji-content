@@ -37,16 +37,4 @@ class ContentsController extends AbstractController
             'content' => $content,
         ]);
     }
-
-    #[Route('/search', name: 'contents_search', methods: ['GET'])]
-    public function search(ContentsRepository $contentsRepository, Request $request): Response
-    {
-        $page = $request->query->get('page') ?? 1;
-
-        $search = $request->query->get('search') ?? null;
-
-        $filteredContents = $contentsRepository->search(null, $search, $page);
-
-
-    }
 }

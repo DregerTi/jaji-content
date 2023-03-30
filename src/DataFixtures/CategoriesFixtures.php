@@ -18,13 +18,13 @@ class CategoriesFixtures extends Fixture implements DependentFixtureInterface
         $featherIconsList = ['activity', 'clipboard', 'droplet', 'eye', 'map', 'phone-call', 'thermometer'];
 
         $usedWords = [];
-        for ($i=0; $i < 50; $i++) {
-            $word = $faker->word;
-            while (in_array($word, $usedWords, true)) {
+        for ($i=0; $i < 100; $i++) {
+            do {
                 $word = $faker->word;
             }
+            while (in_array($word, $usedWords, true)) ;
             $object = (new Categories())
-                ->setLabel($faker->word)
+                ->setLabel($word)
             ;
             $usedWords[] = $word;
             $users = $faker->randomElements($users, $faker->numberBetween(1, count($users)));

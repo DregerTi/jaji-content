@@ -30,20 +30,18 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
 
             switch ($object->getType()) {
                 case 'Video':
-                    $object->setSrc('<iframe width="560" height="315" src="https://www.youtube.com/embed/n4DB-oay4XQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>')
-                        ->setContent($faker->text(100));
+                    $object->setSrc('<iframe width="560" height="315" src="https://www.youtube.com/embed/n4DB-oay4XQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>');
                     $object->setPrewiewImg($faker->imageUrl(640, 480, 'cats', true, 'Faker', true));
                     break;
                 case 'Podcast':
-                    $object->setSrc('<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3LbYXe4nxvgTYofXbceuXs?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>')
-                        ->setContent($faker->text(100));
+                    $object->setSrc('<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3LbYXe4nxvgTYofXbceuXs?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>');
                     $object->setPrewiewImg($faker->imageUrl(640, 480, 'cats', true, 'Faker', true));
                     break;
                 case 'Article':
-                    $object->setContent($faker->text(1000));
                     $object->setPrewiewImg($faker->imageUrl(640, 480, 'cats', true, 'Faker', true));
                     break;
             }
+            $object->setContent($faker->text(1000));
 
             $objectCategory = $faker->randomElements($categories, $faker->numberBetween(1, 5));
             foreach ($objectCategory as $category) {

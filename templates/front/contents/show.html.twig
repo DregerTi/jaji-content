@@ -5,20 +5,24 @@
 {% block body %}
     <div class="container-lite article">
         <header>
-            <h1 class="title">{{ content.title }}</h1>
-            <section class="flex gap-2 flex-wrap">
-                {% for categorie in content.getCategories %}
-                    {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: content.type|lower == "video" ? "blue" : content.type|lower == "podcast" ? "red" : content.type|lower == "article" ? "yellow" : null }) }}
-                {% endfor %}
-            </section>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+            <h1 class="title {{ content.type == 'Article' ? 'text-yellow-sub': content.type == 'Video' ? 'text-ocean-wave' : content.type == 'Podcast' ? 'text-red-light' : 'text-ocean-wave' }}">{{ content.title }}</h1>
+            <div class="flex-row">
+                <section class="flex gap-2 flex-wrap mt-5 mb-5">
+                    {% for categorie in content.getCategories %}
+                        {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: content.type|lower == "video" ? "blue" : content.type|lower == "podcast" ? "red" : content.type|lower == "article" ? "yellow" : null }) }}
+                    {% endfor %}
+                </section>
+                <date class="mt-5 mb-5">
+                    <span class="elementor-icon-list-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="8" viewBox="0 0 7 8" fill="none"><circle cx="3.5" cy="4" r="3.5" fill="#5D738D"></circle></svg>
+                    </span>
+                    {% if content.updatedAt %}
+                        Mis à jour le {{ content.updatedAt ? content.updatedAt|date('d-m-Y') : '' }}
+                    {% else %}
+                        Publié le {{ content.createdAt ? content.createdAt|date('d-m-Y') : '' }}
+                    {% endif %}
+                </date>
+            </div>
         </header>
         <section>
             {% if content.type == 'Article' %}

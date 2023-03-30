@@ -16,8 +16,8 @@ class UsersController extends AbstractController
     #[Route('/', name: 'users_index', methods: ['GET'])]
     public function index(Request $request, UsersRepository $usersRepository): Response
     {
-        $search = $request->query->get('search') ?
-            explode(' ', $request->query->get('search')) : null
+        $search = $request->query->get('search_user') ?
+            explode(' ', $request->query->get('search_user')) : null
         ;
         $role = $request->query->get('role');
         return $this->render('back/users/index.html.twig', [

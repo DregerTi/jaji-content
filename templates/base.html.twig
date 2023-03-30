@@ -28,7 +28,7 @@
                     {% if app.request.get('_route') == 'app_login' %}
                 </div>
                 {% else %}
-                    <form method="GET" action="#" class="w-full">
+                    <form method="GET" action="{{ path('front_contents_index') }}" class="w-full">
                         <input name="search" type="text" class="search-bar w-full" value="{{ app.request.query.get('search') }}" placeholder="Que cherchez-vous ?">
                     </form>
                 </div>

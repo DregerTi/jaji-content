@@ -73,8 +73,8 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
             $i =0;
             foreach ($names as $value) {
                 ++$i;
-                $query->orWhere('u.firstname LIKE :name'.$i.' OR u.lastname LIKE :name'.$i)
-                    ->setParameter('name'.$i, '%'.$value.'%');
+                $query->orWhere('upper(u.firstname) LIKE :name'.$i.' OR upper(u.lastname) LIKE :name'.$i)
+                    ->setParameter('name'.$i, '%'.strtoupper($value).'%');
             }
         }
 

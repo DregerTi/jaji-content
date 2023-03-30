@@ -10,6 +10,9 @@
                     title:'Contenus',
                     text:'Vous pouvez consulter ici la liste des utilisateurs',
                 }) }}
+                <form method="GET" action="#" class="w-full">
+                    <input name="search_user" type="text" class="search-bar w-full" value="{{ app.request.query.get('search_user') }}" placeholder="Que cherchez-vous ?">
+                </form>
 
                 {% for user in users %}
                     {{ include('/components/list_item.html.twig', {

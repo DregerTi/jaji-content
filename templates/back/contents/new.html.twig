@@ -1,11 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig'%}
 
-{% block title %}New Contents{% endblock %}
+{% block title %}Offre{% endblock %}
 
 {% block body %}
-    <h1>Create new Contents</h1>
+    {% embed '/components/back_office_header_and_menu.html.twig' with {'active': 'contents'} %}
+        {% block content %}
+            <div class="flex-grow">
+                {{ include('/components/sub_header.html.twig', {
+                    title:'Contents',
+                    text:'Ajoutez ici un contenu',
+                    btnText:'Retour',
+                    btnPath:'back_contents_index'
+                }) }}
 
-    {{ include('back/contents/_form.html.twig') }}
-
-    <a href="{{ path('front_contents_index') }}">back to list</a>
+                {{ include('back/contents/_form.html.twig') }}
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

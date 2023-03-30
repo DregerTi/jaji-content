@@ -67,7 +67,7 @@ class ContentsType extends AbstractType
                 'class' => Categories::class,
                 'choice_label' => 'label',
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
                 'label' => 'Catégories',
             ])
         ;

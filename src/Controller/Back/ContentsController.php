@@ -43,7 +43,7 @@ class ContentsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('image')->getData();
             if ($photoFile) {
-                $this->saveImage($photoFile, $slugger);
+                $content->setPrewiewImg(($this->saveImage($photoFile, $slugger)));
             }
 
             $content->setCreatedBy($this->getUser());
@@ -83,6 +83,7 @@ class ContentsController extends AbstractController
             $photoFile = $form->get('image')->getData();
             if ($photoFile) {
                 $content->setPrewiewImg($this->saveImage($photoFile, $slugger));
+                var_dump($content->getPrewiewImg());die;
             }
 
             $content->setUpdatedBy($this->getUser());

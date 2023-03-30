@@ -19,7 +19,8 @@ class UsersController extends AbstractController
         $search = $request->query->get('search_user') ?
             explode(' ', $request->query->get('search_user')) : null
         ;
-        $role = $request->query->get('role');
+        $role = in_array($request->query->get('role'), ['CLIENT', 'EDITEUR', 'ADMIN'], true) ?
+            $request->query->get('role') : null;
         return $this->render('back/users/index.html.twig', [
             'users' => $usersRepository->search($search, $role),
         ]);

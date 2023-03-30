@@ -12,6 +12,17 @@
                 }) }}
                 <form method="GET" action="#" class="w-full">
                     <input name="search_user" type="text" class="search-bar w-full" value="{{ app.request.query.get('search_user') }}" placeholder="Que cherchez-vous ?">
+                    <div class="flex flex-row gap-1 items-center">
+                        <label for="role" class="block mb-0 text-md font-medium text-grey">Nom :</label>
+                        <select id="role" name="role" class="search-select bg-gray-50 border-0 text-grey hover:text-primary text-md font-medium rounded-lg focus:ring-none focus:border-0 block w-32 p-0.5 href-select">
+                            {% if app.request.get('role') not in ['CLIENT', 'EDITEUR', 'ADMIN'] %}
+                            <option selected>Choisir</option>
+                            {% endif %}
+                            <option value="CLIENT" {% if app.request.get('role') is defined and app.request.get('role') == 'CLIENT' %}selected{% endif %}">CLIENT</option>
+                            <option value="EDITEUR" {% if app.request.get('role') is defined and app.request.get('role') == 'EDITEUR' %}selected{% endif %}>EDITEUR</option>
+                            <option value="ADMIN" {% if app.request.get('role') is defined and app.request.get('role') == 'ADMIN' %}selected{% endif %}>ADMINISTRATEUR</option>
+                        </select>
+                    </div>
                 </form>
 
                 {% for user in users %}

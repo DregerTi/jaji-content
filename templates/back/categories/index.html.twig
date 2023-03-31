@@ -13,13 +13,16 @@
                     btnPath:'back_categories_new',
                 }) }}
 
-                {% for category in categories %}
-                    {{ include('/components/list_item.html.twig', {
-                        path:'back_categories_show',
-                        pathParams:{ label: category.label},
-                        name: category.label,
-                    }) }}
-                {% endfor %}
+                <div class="flex-wrap flex gap-5">
+                    {% for category in categories %}
+                        {{ include('/components/list_item.html.twig', {
+                            path:'back_categories_show',
+                            pathParams:{ label: category.label},
+                            name: category.label,
+                            icon: category.iconReference,
+                        }) }}
+                    {% endfor %}
+                </div>
             </div>
         {% endblock %}
     {% endembed %}

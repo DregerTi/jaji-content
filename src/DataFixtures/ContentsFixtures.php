@@ -30,7 +30,7 @@ class ContentsFixtures extends Fixture implements DependentFixtureInterface
 
             switch ($object->getType()) {
                 case 'Video':
-                    $object->setSrc('<iframe width="560" height="315" src="https://www.youtube.com/embed/n4DB-oay4XQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>');
+                    $object->setSrc('<iframe src="https://www.youtube.com/embed/n4DB-oay4XQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>');
                     $object->setPrewiewImg($faker->imageUrl(640, 480, 'cats', true, 'Faker', true));
                     break;
                 case 'Podcast':

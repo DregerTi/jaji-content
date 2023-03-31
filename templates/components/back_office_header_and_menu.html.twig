@@ -1,6 +1,6 @@
 <div class="container flex flex-col gap-24 max-md:gap-16">
     <div class="flex gap-40">
-        <div class="flex flex-col gap-10 min-w-[200px] max-md:hidden ">
+        <div class="flex flex-col gap-10 min-w-[200px] {{ app.request.attributes.get('_route') == 'back_default_index' ? 'max-md:w-full' : 'max-md:hidden' }}">
             <div class="flex flex-col gap-5">
                 <div class="flex flex-col gap-5">
                     {{ include('/components/button_menu.html.twig', {

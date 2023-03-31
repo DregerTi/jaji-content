@@ -6,7 +6,7 @@
     <div class="container-lite">
         <form action="#">
             <label for="sortByCreationDate" class="block mb-0 text-md font-medium text-grey">Date de création :</label>
-            <select id="sortByCreationDate" name="sortByCreationDate" class="search-select get-search bg-gray-50 border-0 text-grey hover:text-primary text-md font-medium rounded-lg focus:ring-none focus:border-0 block w-32 p-0.5 href-select">
+            <select id="sortByCreationDate" name="sortByCreationDate" class="search-select get-search bg-gray-50 border-0 text-grey hover:text-primary text-md font-medium rounded-lg focus:ring-none focus:border-0 block w-60 p-0.5 href-select">
                 {% if app.request.get('sortByCreationDate') not in ['ASC', 'DESC'] %}
                 <option selected>Choisir</option>
                 {% endif %}

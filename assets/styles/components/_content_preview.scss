@@ -12,7 +12,6 @@
 
     > figure {
       position: absolute;
-      box-shadow: inset 0 0 10px #f8a100;
       top: 0;
       > img {
         width: 100%;
@@ -95,6 +94,27 @@
             font-size: rem(56) !important;
           }
         }
+      }
+    }
+  }
+
+  &----article {
+    height: max-content;
+    > article {
+      transition: all 0.5s;
+      width: 100%;
+      height: 400px;
+
+      > figure {
+        > img {
+          width: 100%;
+          height: 400px;
+        }
+      }
+
+      > section {
+        width: 100%;
+        height: 400px;
       }
     }
   }

@@ -23,14 +23,16 @@
                         </select>
                     </div>
                 </form>
+                <div class="flex-wrap flex gap-5">
+                    {% for user in users %}
+                        {{ include('/components/list_item.html.twig', {
+                            path:'back_users_show',
+                            pathParams:{ id: user.id},
+                            name: user.firstname ~ ' ' ~ user.lastname,
+                        }) }}
+                    {% endfor %}
+                </div>
 
-                {% for user in users %}
-                    {{ include('/components/list_item.html.twig', {
-                        path:'back_users_show',
-                        pathParams:{ id: user.id},
-                        name: user.firstname ~ ' ' ~ user.lastname,
-                    }) }}
-                {% endfor %}
             </div>
         {% endblock %}
     {% endembed %}

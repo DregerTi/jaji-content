@@ -2,6 +2,10 @@ import './styles/app.scss';
 import './js/notyf.js';
 document.querySelectorAll('.search-select').forEach(function (select) {
     select.addEventListener('change', function () {
+        console.log(document.getElementsByName('search')[0].value);
+        if (select.classList.contains('get-search')) {
+            document.getElementById('fake-search').value = document.getElementsByName('search')[0].value;
+        }
         select.closest('form').submit();
     });
 });

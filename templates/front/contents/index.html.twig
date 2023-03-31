@@ -4,7 +4,18 @@
 
 {% block body %}
     <div class="container-lite">
-        <section id="containerFeed" class="feed-container containerFeed blocks">
+        <form action="#">
+            <label for="sortByCreationDate" class="block mb-0 text-md font-medium text-grey">Date de création :</label>
+            <select id="sortByCreationDate" name="sortByCreationDate" class="search-select get-search bg-gray-50 border-0 text-grey hover:text-primary text-md font-medium rounded-lg focus:ring-none focus:border-0 block w-32 p-0.5 href-select">
+                {% if app.request.get('sortByCreationDate') not in ['ASC', 'DESC'] %}
+                <option selected>Choisir</option>
+                {% endif %}
+                <option value="ASC" {% if app.request.get('sortByCreationDate') is defined and app.request.get('sortByCreationDate') == 'ASC' %}selected{% endif %}">Plus récent au plus ancien</option>
+                <option value="DESC" {% if app.request.get('sortByCreationDate') is defined and app.request.get('sortByCreationDate') == 'DESC' %}selected{% endif %}>Plus ancien au plus récent</option>
+            </select>
+            <input type="text" class="hidden" name="search" id="fake-search"/>
+        </form>
+        <section id="containerFeed" class="feed-container containerFeed blocks pt-10">
             {% set index = 0 %}
             {% for content in contents %}
                 {{ include('/components/content_preview.html.twig' , {type: content.type|lower, middle: index == 1 ? true : false, path:'front_contents_show', pathParams:{slug: content.slug}, title:content.title, date:content.updatedAt ? content.updatedAt|date('d-m-Y') : content.createdAt|date('d-m-Y'), image:asset(content.prewiewImg ), description:content.description, categories:content.getCategories }) }}

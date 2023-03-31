@@ -214,3 +214,9 @@ button {
   margin: 30px 0;
 }
 
+.bookmark {
+  stroke: $color-primary;
+  &--favorited {
+    fill: $color-primary;
+  }
+}

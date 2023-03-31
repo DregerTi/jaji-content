@@ -38,14 +38,13 @@ class FavoritesController extends AbstractController
         return $this->redirectToRoute('front_favorites_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}', name: 'favorites_delete', methods: ['POST'])]
-    #[Security('favorite.getUser() == user')]
-    public function delete(Request $request, Favorites $favorite, FavoritesRepository $favoritesRepository): Response
+    #[Route('/remove/{slug}', name: 'favorites_delete', methods: ['POST'])]
+    #[Security('favorite.getLiker() == user')]
+    public function delete(Request $request, Contents $content, FavoritesRepository $favoritesRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$favorite->getId(), $request->request->get('_token'))) {
-            $favoritesRepository->remove($favorite, true);
-            $this->addFlash('success', $favorite->getContent()->getTitle().' a bien été retiré de votre liste.');
-        }
+        $favorite = $favoritesRepository->findOneBy(['content' => $content, 'liker' => $this->getUser()]);
+        $favoritesRepository->remove($favorite, true);
+        $this->addFlash('success', $favorite->getContent()->getTitle().' a bien été retiré de votre liste.');
 
         return $this->redirectToRoute('front_favorites_index', [], Response::HTTP_SEE_OTHER);
     }

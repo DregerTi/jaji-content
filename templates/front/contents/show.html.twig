@@ -16,14 +16,20 @@
                     <span class="elementor-icon-list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="7" height="8" viewBox="0 0 7 8" fill="none"><circle cx="3.5" cy="4" r="3.5" fill="#5D738D"></circle></svg>
                     </span>
-                    <date class="">
-
+                    <date class="list-none">
                         {% if content.updatedAt %}
                             Mis à jour le {{ content.updatedAt ? content.updatedAt|date('d-m-Y') : '' }}
                         {% else %}
                             Publié le {{ content.createdAt ? content.createdAt|date('d-m-Y') : '' }}
                         {% endif %}
                     </date>
+                    {% set isLiked = false %}
+                    {% for favorite in app.user.favorites %}
+                        {% if favorite.content == content %}
+                            {% set isLiked = true %}
+                        {% endif %}
+                    {% endfor %}
+                    <i data-feather="bookmark" onclick="favorite('{{content.slug}}')" class="bookmark {% if isLiked %}bookmark--favorited{% endif %}"></i>
                 </div>
 
                 <div class="flex flex-row gap-5">
@@ -58,4 +64,27 @@
             }) }}
         {% endfor %}
     </div>
+
+    <script>
+    function favorite(slug) {
+        const bookmark = document.querySelector('.bookmark');
+        let clicked = bookmark.classList.contains('bookmark--favorited');
+        if (clicked == false) {
+            bookmark.classList.add('bookmark--favorited');
+            $.ajax({
+                type: 'POST',
+                url: '/favorites/new/' + slug,
+            });
+            notyf.success('Vous avez ajouté ' + slug + ' à votre liste de favoris !');
+            
+        } else {
+            bookmark.classList.remove('bookmark--favorited');
+            $.ajax({
+                type: 'POST',
+                url: '/favorites/remove/' + slug,
+            });
+            notyf.success('Vous avez supprimé ' + slug + ' de votre liste de favoris !');
+        }
+    }
+</script>
 {% endblock %}

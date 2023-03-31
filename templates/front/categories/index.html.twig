@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Categories index{% endblock %}
+{% block title %}Mes préférences{% endblock %}
 
 {% block body %}
 <div class="container-lite">
-    <h1 class="title">Mes catégories</h1>
+    <h1 class="title">Mes préférences</h1>
     <div class="categories__grid">
         {% for category in app.user.categories %}
-            {{ include('/components/filter.html.twig', { name:category.label, icon:category.iconReference, clicked:true }) }}
+            {{ include('/components/filter.html.twig', { category:category, clicked:true }) }}
         {% else %}
             <p>Vous n'avez pas encore ajouté de catégorie 😪</p>
         {% endfor %}
@@ -16,11 +16,41 @@
     <div class="categories__grid">
         {% for category in categories %}
             {% if not app.user.categories.contains(category) %}
-                {{ include('/components/filter.html.twig', { name:category.label, icon:category.iconReference, clicked:false }) }}
+                {{ include('/components/filter.html.twig', { category:category, clicked:false }) }}
             {% endif %}
         {% else %}
             <p>Aucune catégorie existante 😢</p>
         {% endfor %}
+        {% if notyf is defined %}
+            <div id="notyf-message" class={{ notyf }}>{{ notyf }}</div>
+        {% endif %}
     </div>
 </div>
+
+<script>
+    function select(label) {
+        const filterContainer = document.getElementById('filter-'+label);
+        let clicked = filterContainer.classList.contains('filter--clicked');
+        if (clicked == false) {
+            filterContainer.classList.add('filter__container--clicked');
+            filterContainer.classList.add('filter--clicked');
+            $.ajax({
+                type: 'POST',
+                url: '/categories/add/' + label,
+            });
+            notyf.success('Vous avez ajouté la catégorie ' + label + ' à votre liste de préférences !');
+            
+        } else {
+            filterContainer.classList.remove('filter__container--clicked');
+            filterContainer.classList.remove('filter--clicked');
+            $.ajax({
+                type: 'POST',
+                url: '/categories/remove/' + label,
+            });
+            notyf.error('Vous avez supprimé la catégorie ' + label + ' de votre liste de préférences !');
+        }
+    }
+</script>
 {% endblock %}
+
+

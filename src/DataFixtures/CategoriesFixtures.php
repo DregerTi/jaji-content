@@ -9,7 +9,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-class CategoriesFixtures extends Fixture implements DependentFixtureInterface
+class CategoriesFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -27,10 +27,6 @@ class CategoriesFixtures extends Fixture implements DependentFixtureInterface
                 ->setLabel($word)
             ;
             $usedWords[] = $word;
-            $users = $faker->randomElements($users, $faker->numberBetween(1, count($users)));
-            foreach ($users as $user) {
-                $object->addUser($user);
-            }
             $object->setIconReference($faker->randomElement($featherIconsList));
             $manager->persist($object);
         }
@@ -38,10 +34,4 @@ class CategoriesFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies(): array
-    {
-        return [
-            UsersFixtures::class,
-        ];
-    }
 }

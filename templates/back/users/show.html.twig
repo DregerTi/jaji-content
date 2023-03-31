@@ -15,28 +15,28 @@
                 <table class="table">
                     <tbody>
                     <tr class="flex flex-col gap-2 items-start mb-8">
-                        <th>Nom</th>
+                        <th class="title-sm">Nom Prénom</th>
                         <td>{{ user.firstname ~ ' ' ~ user.lastname }}</td>
-                        <th>Email</th>
+                        <th class="title-sm">Email</th>
                         <td>{{ user.email }}</td>
-                        <th>Rôles</th>
+                        <th class="title-sm">Rôles</th>
                         <td>
                             {% for role in user.roles %}
                                 {% if role != 'ROLE_USER' %}
-                                    {{ role | replace({'ROLE_': ''}) }}
+                                    {{ include('/components/category_label.html.twig', { value:role | replace({'ROLE_': ''}), variant:'blue' }) }}
+
                                 {% endif %}
                             {% endfor %}
                         </td>
+                        <th class="title-sm">Nombre de sauvegardes</th>
+                        <td>{{ user.favorites|length }}</td>
                         {% if 'ROLE_CLIENT' in user.roles %}
-                            <th>Catégories</th>
-                            <td>
+                            <th class="title-sm">Intérêts</th>
+                            <td class="flex gap-5 flex-wrap">
                                 {% for categorie in user.categories %}
-                                    {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: 'blue' }) }}
+                                    {{ include('/components/filter.html.twig', { category:categorie, clicked:true }) }}
                                 {% endfor %}
                             </td>
-
-                            <th>Nombre de sauvegardes</th>
-                            <td>{{ user.favorites|length }}</td>
                         {% endif %}
                     </tr>
                     </tbody>

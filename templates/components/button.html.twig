@@ -1,9 +1,9 @@
 {% if path is defined %}
     <a href="{{ path(path, pathParams is defined ? pathParams : {} ) }}">
 {% endif %}
-        <div class="button {{ fill ? 'button-filled' : '' }} {{ icon is defined ? 'button-icon' : '' }} {{ variant  is defined ? 'button-'~variant : '' }}">
+        <div class="{% if variant is defined and variant == 'admin' %}button-admin {% else %}button {{ variant  is defined ? 'button-'~variant : '' }}{% endif %} {{ fill ? 'button-filled' : '' }} {{ icon is defined ? 'button-icon' : '' }}">
             {% if icon is defined %}
-                {{ include('/icons/icon-' ~ icon ~ '.html.svg') }}
+                <i data-feather="{{ icon }}"></i>
             {% endif %}
             {% if text is defined %}
                 <p>{{ text }}</p>

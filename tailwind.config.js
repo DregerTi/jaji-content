@@ -13,6 +13,17 @@ module.exports = {
     "./templates/**/*.{html,twig}",
   ],
   theme: {
+    colors: {
+      'black': '#222222',
+      'white': '#FAFCFE',
+      'lightgrey': '#EBEBEB',
+      'grey': '#7E7E7E',
+      'primary': '#355070',
+      'secondary': '#8EC9D1',
+      'success': '#458E9D',
+      'red': '#E67377',
+      'warning': '#FFA630',
+    },
     extend: {
       fontFamily: {
         'prompt': ['Prompt', 'sans-serif']

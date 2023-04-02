@@ -20,8 +20,10 @@ class ContentsController extends AbstractController
             ? explode(',', $request->query->get('categories'))
             : null;
         $search = $request->query->get('search');
+        $sortByCreationDate = in_array($request->query->get('sortByCreationDate'), ['ASC', 'DESC'], true) ?
+            $request->query->get('sortByCreationDate') : null;
 
-        $filteredContents = $contentsRepository->search($categories, $search, $page);
+        $filteredContents = $contentsRepository->search($categories, $search, $page, $sortByCreationDate);
 
         return $this->render('front/contents/index.html.twig', [
             'contents' => $filteredContents['results'],

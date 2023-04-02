@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contenus{% endblock %}
+{% block title %}Offres{% endblock %}
 
 {% block body %}
     {% embed '/components/back_office_header_and_menu.html.twig' with {'active': 'offers'} %}
         {% block content %}
             <div class="flex-grow">
                 {{ include('/components/sub_header.html.twig', {
-                    title:'Contenus',
+                    title:'Offres',
                     text:'Vous pouvez consulter ici la liste des catégories',
                     btnText:'Ajouter une offre',
                     btnPath:'back_offers_new',

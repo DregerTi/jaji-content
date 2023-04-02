@@ -1,11 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig'%}
 
-{% block title %}New Categories{% endblock %}
+{% block title %}Contenu{% endblock %}
 
 {% block body %}
-    <h1>Create new Categories</h1>
+    {% embed '/components/back_office_header_and_menu.html.twig' with {'active': 'categories'} %}
+        {% block content %}
+            <div class="flex-grow">
+                {{ include('/components/sub_header.html.twig', {
+                    title:'Catégories',
+                    text:'Ajoutez ici une catégorie',
+                    btnText:'Retour',
+                    btnPath:'back_categories_index'
+                }) }}
 
-    {{ include('back/categories/_form.html.twig') }}
-
-    <a href="{{ path('front_categories_index') }}">back to list</a>
+                {{ include('back/categories/_form.html.twig') }}
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

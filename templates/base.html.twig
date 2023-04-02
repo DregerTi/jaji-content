@@ -7,8 +7,10 @@
         <script src="https://unpkg.com/feather-icons"></script>
         <link rel="icon" type="image/svg" href="{{ asset('build/icons/logo-mobile.svg') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -25,16 +27,26 @@
                         <img class="logo max-md:hidden" src="{{ asset('build/icons/logo.svg') }}" alt="logo">
                         <img class="logo md:hidden lg:hidden xl:hidden" src="{{ asset('build/icons/logo-mobile.svg') }}" alt="logo">
                     </a>
-                    {% if app.request.get('_route') != 'app_login' %}
-                    <form method="GET" action="#" class="w-full">
+                    {% if app.request.get('_route') == 'app_login' %}
+                </div>
+                {% else %}
+                    <form method="GET" action="{{ path('front_contents_index') }}" class="w-full">
                         <input name="search" type="text" class="search-bar w-full" value="{{ app.request.query.get('search') }}" placeholder="Que cherchez-vous ?">
                     </form>
-                    {% endif %}
                 </div>
-                {% if app.request.get('_route') != 'app_login' %}
                     <nav class="header-navigation space-x-5 max-md:hidden">
-                        <a href=""><i data-feather="bookmark"></i></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {{ include('/components/button.html.twig', {
+                        path:'back_default_index',
+                        text:'Administration',
+                        icon: 'lock',
+                        fill: false,
+                        variant: 'admin',
+                    }) }}
+                    {% else %}
+                        <a href="{{ path('front_favorites_index') }}"><i data-feather="bookmark"></i></a>
                         <a href="{{ path('front_categories_index') }}"><i data-feather="sliders"></i></a>
+                    {% endif %}
                         <a class="max-lg:hidden" href="{{ path('app_logout') }}">Se déconnecter</a>
                         <a class="max-md:hidden lg:hidden xl:hidden" href="{{ path('app_logout') }}"><i data-feather="log-out"></i></a>
                     </nav>
@@ -46,13 +58,30 @@
             <header class="headerMobile max-md:block">
                 <div class="headerMobile__content container mx-auto">
                     <a class="headerMobile__icon {% if app.request.get('_route') == 'front_default_index' %}headerMobile__icon--active{% endif %}" href="{{ path('front_default_index') }}"><i data-feather="home"></i></a>
-                    <a class="headerMobile__icon" href=""><i data-feather="bookmark"></i></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {{ include('/components/button.html.twig', {
+                        path:'back_default_index',
+                        text:'Administration',
+                        icon: 'lock',
+                        fill: false,
+                        variant: 'admin',
+                    }) }}
+                    {% else %}
+                    <a class="headerMobile__icon" href="{{ path('front_favorites_index') }}"><i data-feather="bookmark"></i></a>
                     <a class="headerMobile__icon" href="{{ path('front_categories_index') }}"><i data-feather="sliders"></i></a>
+                    {% endif %}
                     <a class="headerMobile__icon" href="{{ path('app_logout') }}"><i data-feather="log-out"></i></a>
                 </div>
             </header>
         {% endif %}
+        {% if app.request.get('_route') == 'front_contents_index' %}
+            <div class="bg-img">
+                <div>
 
+                </div>
+                <img src="{{ asset('build/images/pink-after.svg') }}" width="100%" class="" alt="feed illustration">
+            </div>
+        {% endif %}
         <div class="container mx-auto">
             <main>
                 {% block body %}{% endblock %}
@@ -69,6 +98,7 @@
     
     </footer>
     </body>
+
     <script>
         feather.replace()
         function notifyOffers(data) {

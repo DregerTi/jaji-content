@@ -3,22 +3,48 @@
 {% block title %}{{ content.title }}{% endblock %}
 
 {% block body %}
-    <main class="container-lite article">
+    <div class="container-lite article">
         <header>
-            <h1 class="title">{{ content.title }}</h1>
-            <section class="flex gap-2 flex-wrap">
-                {% for categorie in content.getCategories %}
-                    {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: content.type|lower == "video" ? "blue" : content.type|lower == "podcast" ? "red" : content.type|lower == "article" ? "yellow" : null }) }}
-                {% endfor %}
-            </section>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+            <h1 class="title {{ content.type == 'Article' ? 'text-yellow-sub': content.type == 'Video' ? 'text-ocean-wave' : content.type == 'Podcast' ? 'text-red-light' : 'text-ocean-wave' }}">{{ content.title }}</h1>
+            <div class="flex flex-row justify-between gap-5 max-md:flex-col">
+                <div class="content-infos mt-5 mb-5">
+                    <span class="flex gap-1">
+                        {% for categorie in content.getCategories %}
+                            {{ include('/components/category_label.html.twig', {value: categorie.label, active:false, variant: content.type|lower == "video" ? "blue" : content.type|lower == "podcast" ? "red" : content.type|lower == "article" ? "yellow" : null }) }}
+                        {% endfor %}
+                    </span>
+                    <span class="elementor-icon-list-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="8" viewBox="0 0 7 8" fill="none"><circle cx="3.5" cy="4" r="3.5" fill="#5D738D"></circle></svg>
+                    </span>
+                    <date class="list-none">
+                        {% if content.updatedAt %}
+                            Mis à jour le {{ content.updatedAt ? content.updatedAt|date('d-m-Y') : '' }}
+                        {% else %}
+                            Publié le {{ content.createdAt ? content.createdAt|date('d-m-Y') : '' }}
+                        {% endif %}
+                    </date>
+                    {% set isLiked = false %}
+                    {% for favorite in app.user.favorites %}
+                        {% if favorite.content == content %}
+                            {% set isLiked = true %}
+                        {% endif %}
+                    {% endfor %}
+                    <i data-feather="bookmark" onclick="favorite('{{content.slug}}')" class="bookmark {% if isLiked %}bookmark--favorited{% endif %}"></i>
+                </div>
+
+                <div class="flex flex-row gap-5">
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        {{ include('/components/button.html.twig', {
+                            path:'back_contents_edit',
+                            pathParams: {'slug': content.slug},
+                            text:'Edit',
+                            fill: false,
+                        }) }}
+
+                        {{ include('back/contents/_delete_form.html.twig') }}
+                    {% endif %}
+                </div>
+            </div>
         </header>
         <section>
             {% if content.type == 'Article' %}
@@ -30,13 +56,35 @@
             {% endif %}
         </section>
         <p>{{ content.description }}</p>
-        <article>{{ content.content }}</article>
+        <article class="mb-6">{{ content.content|raw }}</article>
+        {% for offer in content.offers %}
+            {{ include('/components/offer.html.twig', {
+                path:offer.link,
+                text:'Inclus dans l\'offre ' ~ offer.title,
+            }) }}
+        {% endfor %}
+    </div>
 
-    </main>
-
-    <a href="{{ path('front_contents_index') }}">back to list</a>
-
-    <a href="{{ path('back_contents_edit', {'slug': content.slug}) }}">edit</a>
-
-    {{ include('back/contents/_delete_form.html.twig') }}
+    <script>
+    function favorite(slug) {
+        const bookmark = document.querySelector('.bookmark');
+        let clicked = bookmark.classList.contains('bookmark--favorited');
+        if (clicked == false) {
+            bookmark.classList.add('bookmark--favorited');
+            $.ajax({
+                type: 'POST',
+                url: '/favorites/new/' + slug,
+            });
+            notyf.success('Vous avez ajouté ' + slug + ' à votre liste de favoris !');
+            
+        } else {
+            bookmark.classList.remove('bookmark--favorited');
+            $.ajax({
+                type: 'POST',
+                url: '/favorites/remove/' + slug,
+            });
+            notyf.success('Vous avez supprimé ' + slug + ' de votre liste de favoris !');
+        }
+    }
+</script>
 {% endblock %}

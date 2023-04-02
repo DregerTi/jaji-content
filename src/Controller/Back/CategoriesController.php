@@ -32,7 +32,7 @@ class CategoriesController extends AbstractController
             $categoriesRepository->save($category, true);
 
             $this->addFlash('success', $category->getLabel().' a bien été ajouté.');
-            return $this->redirectToRoute('front_categories_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_categories_index', [], Response::HTTP_SEE_OTHER);
         }
 
         if ($form->isSubmitted()) {
@@ -63,7 +63,7 @@ class CategoriesController extends AbstractController
             $categoriesRepository->save($category, true);
 
             $this->addFlash('success', $category->getLabel().' a bien été modifié.');
-            return $this->redirectToRoute('front_categories_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_categories_index', [], Response::HTTP_SEE_OTHER);
         }
 
         if ($form->isSubmitted()) {
@@ -84,6 +84,6 @@ class CategoriesController extends AbstractController
             $this->addFlash('success', $category->getLabel().' a bien été supprimé.');
         }
 
-        return $this->redirectToRoute('front_categories_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_categories_index', [], Response::HTTP_SEE_OTHER);
     }
 }

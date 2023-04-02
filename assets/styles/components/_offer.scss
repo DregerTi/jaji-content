@@ -1,0 +1,87 @@
+.offer{
+  background: #FFFFFF;
+  position: relative;
+  padding-top: 30px;
+  /* Neutral/Light/N300 (diasble background) */
+  border: 1px solid #EBEFF5;
+  /* Elevation/Card
+
+  use for cards
+  */
+  box-shadow: 0px 2px 4px rgba(23, 43, 77, 0.15);;
+  width: 100%;
+  padding: 20px;
+
+  margin-bottom: 50px;
+  margin-top: 40px;
+  /* Neutral/Light/N100 */
+  background: #FFFFFF;
+
+  /* Neutral/Light/N300 (diasble background) */
+  border: 1px solid #EBEFF5;
+  border-radius: 8px;
+  color: #355070;
+
+  > .title-sm{
+    font-family: 'Source Sans Pro'!important;
+    font-style: normal!important;
+    font-weight: 400!important;
+    font-size: 24px!important;
+    line-height: 20px!important;
+    margin-bottom: 20px;
+    margin-top: 40px;
+
+    margin-left: 0px!important;
+  }
+
+  > .pill-offer{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 5px 8px;
+    position: absolute;
+    top: 20px;
+    left: -10px;
+
+
+    /* Blue/B500 (action)
+
+    Action color
+    */
+    background: #75A3E3;
+    border-radius: 4px 4px 4px 0px;
+
+    font-family: 'Source Sans Pro';
+    font-size: 14px;
+    line-height: 14px;
+
+    /* identical to box height, or 117% */
+
+    /* Character / Primary(inverse) */
+    color: #FFFFFF;
+
+
+  }
+
+  .det-pill-offer{
+    position: absolute;
+    width: 8px;
+    height: 6px;
+    left: 0px;
+    top: 5px;
+
+    /* Neutral/Mid/N600 (disable font + alt text)
+
+    variant
+    */
+    background: #8696A9;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    width: 14px;
+    height: 8px;
+    top: 43px;
+    left: -9px;
+    transform: rotate(45deg);
+    z-index: -1;
+  }
+
+}

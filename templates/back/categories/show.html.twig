@@ -7,7 +7,7 @@
         {% block content %}
             <div class="flex-grow">
                 {{ include('/components/sub_header.html.twig', {
-                    title:'Contenu',
+                    title:'Catégorie',
                     text:'Vous pouvez trouvez ici les information de ce contenu',
                     btnText:'Éditer',
                     btnPath:'back_categories_edit',
@@ -18,11 +18,11 @@
                 <table class="table">
                     <tbody>
                     <tr class="flex flex-col gap-2 items-start mb-8">
-                        <th>Label</th>
-                        <td>{{ category.label }}</td>
-                        <th>Nombre de contenus associés</th>
+                        <td  class="title-sm"><i class="w-24 h-24" data-feather="{{ category.iconReference }}"></i></td>
+                        <td class="title">{{ category.label }}</td>
+                        <th class="title-sm">Nombre de contenus associés</th>
                         <td>{{ category.contents|length }}</td>
-                        <th>Nombre d'utilisateurs associés</th>
+                        <th  class="title-sm">Nombre d'utilisateurs associés</th>
                         <td>{{ category.users|length }}</td>
                     </tr>
                     </tbody>

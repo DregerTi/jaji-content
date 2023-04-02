@@ -46,7 +46,7 @@ class FavoritesRepository extends ServiceEntityRepository
             ->orderBy('f.id', 'ASC')
             ->setFirstResult(($page - 1) * 12)
             ->setParameter('userId', $userId)
-            ->setMaxResults(10)
+            ->setMaxResults(12)
             ->getQuery()
             ->getResult();
     }

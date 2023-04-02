@@ -18,6 +18,12 @@ class CategoriesType extends AbstractType
                     'placeholder' => 'Nom de la catégorie',
                 ],
             ])
+            ->add('iconReference', null, [
+                'label' => 'Icône de la catégorie',
+                'attr' => [
+                    'placeholder' => 'Icône de la catégorie',
+                ],
+            ])
         ;
     }
 

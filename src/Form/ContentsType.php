@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Categories;
 use App\Entity\Contents;
 use App\Entity\Offers;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -46,7 +47,7 @@ class ContentsType extends AbstractType
                 'label' => 'Type',
                 'choices' => [
                     'Article' => 'Article',
-                    'Video' => 'Vidéo',
+                    'Video' => 'Video',
                     'Podcast' => 'Podcast',
                 ]
             ])
@@ -54,9 +55,7 @@ class ContentsType extends AbstractType
                 'label' => 'Source',
                 'required' => false,
             ])
-            ->add('content', null, [
-                'label' => 'Contenu',
-            ])
+            ->add('content', CKEditorType::class)
             ->add('offers', EntityType::class, [
                 'class' => Offers::class,
                 'choice_label' => 'title',
@@ -68,7 +67,7 @@ class ContentsType extends AbstractType
                 'class' => Categories::class,
                 'choice_label' => 'label',
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
                 'label' => 'Catégories',
             ])
         ;

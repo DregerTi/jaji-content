@@ -22,9 +22,11 @@ class ContentsController extends AbstractController
         $categories = $request->query->get('categories')
             ? explode(',', $request->query->get('categories'))
             : null;
-        $search = $request->query->get('search') ?? null;
+        $search = $request->query->get('search');
+        $sortByCreationDate = in_array($request->query->get('sortByCreationDate'), ['ASC', 'DESC'], true) ?
+            $request->query->get('sortByCreationDate') : null;
 
-        $filteredContents = $contentsRepository->search($categories, $search, $page);
+        $filteredContents = $contentsRepository->search($categories, $search, $page, $sortByCreationDate);
 
         return $this->render('back/contents/index.html.twig', [
             'contents' => $filteredContents['results'],
@@ -43,7 +45,7 @@ class ContentsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('image')->getData();
             if ($photoFile) {
-                $this->saveImage($photoFile, $slugger);
+                $content->setPrewiewImg(($this->saveImage($photoFile, $slugger)));
             }
 
             $content->setCreatedBy($this->getUser());
@@ -83,6 +85,7 @@ class ContentsController extends AbstractController
             $photoFile = $form->get('image')->getData();
             if ($photoFile) {
                 $content->setPrewiewImg($this->saveImage($photoFile, $slugger));
+                var_dump($content->getPrewiewImg());die;
             }
 
             $content->setUpdatedBy($this->getUser());
@@ -91,7 +94,7 @@ class ContentsController extends AbstractController
 
             $this->addFlash('success', $content->getTitle().' a bien été modifié.');
 
-            return $this->redirectToRoute('front_contents_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_contents_index', [], Response::HTTP_SEE_OTHER);
         }
 
         if ($form->isSubmitted()) {
@@ -112,10 +115,10 @@ class ContentsController extends AbstractController
             $this->addFlash('success', $content->getTitle().' a bien été supprimé.');
         }
 
-        return $this->redirectToRoute('contents_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_contents_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    private function saveImage($photoFile, $slugger)
+    private function saveImage($photoFile, $slugger): string
     {
         $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $slugger->slug($originalFilename);
